@@ -1,6 +1,9 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class SearchController < ApplicationController
   def index
-    @title = "Search"
+    @title = "Поиск"
     @cur_url = "/search"
 
     @search = Search.new

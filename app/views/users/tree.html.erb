@@ -1,5 +1,5 @@
 <div class="box wide">
-  <p><strong>Users (<%= @user_count %>)</strong></p>
+  <p><strong>Пользователи (<%= @user_count %>)</strong></p>
 
   <ul class="root">
 
@@ -13,9 +13,9 @@
             <%= (Time.now - user.created_at < 7.days ? raw("style=\"color: green;\"") :
             "") %>><%= user.username %></a>&nbsp;(<%= user.karma %>)
           <% if user.is_admin? %>
-            (administrator)
+            (администратор)
           <% elsif user.is_moderator? %>
-            (moderator)
+            (модератор)
           <% end %>
           <% if (children = @users_by_parent[user.id]) %>
             <% # drill down deeper in the tree %>

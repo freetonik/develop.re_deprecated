@@ -1,5 +1,5 @@
-<%= @comment.user.username %> has mention you in a comment:
+<%= @comment.user.username %> упомянул вас в комменатрии:
 
   <%= word_wrap(@comment.plaintext_comment, :line_width => 72).gsub(/\n/, "\n  ") %>
 
-Continue this discussion at <%= @comment.url %>
+Продолжить дискуссию <%= @comment.url %>

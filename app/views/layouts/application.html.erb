@@ -37,17 +37,15 @@
         title="<%= Rails.application.name %> (<%= @traffic.to_i %>)"></a>
 
         <% links = {
-          "/" => "Home",
-          "/newest" => "Newest",
-          "/comments" => "Comments"
+          "/" => "Главная",
+          "/newest" => "Новое",
+          "/comments" => "Комментарии"
         } %>
 
         <% if @user %>
-          <% links.merge!({ "/threads" => "Your Threads",
-            "/stories/new" => "Submit Story" }) %>
+          <% links.merge!({ "/threads" => "Мои треды",
+            "/stories/new" => "Добавить топик" }) %>
         <% end %>
-
-        <% links.merge!({ "/search" => "Search" }) %>
 
         <% if @cur_url.present? && !links.keys.include?(@cur_url) &&
         @heading.present? %>
@@ -66,27 +64,33 @@
 
       <div id="headerright" class="<%= @user ? "loggedin" : "" %>">
         <span class="headerlinks">
+
         <a href="/filters" <%= @cur_url == "/filters" ?
-          raw("class=\"cur_url\"") : "" %>>Filters</a>
+          raw("class=\"cur_url\"") : "" %>>Фильтры</a>
+
+	<% unless @user %>
+          <a href="/invitations/request">Запросить инвайт</a>
+        <% end %>
+
         <% if @user %>
           <% if (count = @user.unread_message_count) > 0 %>
             <a href="/messages" class="new_messages <%= @cur_url == "/messages" ?
-              "cur_url" : "" %>"><%= count %> New Message<%= count == 1 ? "" :
+              "cur_url" : "" %>"><%= count %> Новое сообщение<%= count == 1 ? "" :
               "s" %></a>
           <% else %>
             <a href="/messages" <%= @cur_url == "/messages" ?
-              raw("class=\"cur_url\"") : "" %>>Messages</a>
+              raw("class=\"cur_url\"") : "" %>>Сообщения</a>
           <% end %>
 
           <a href="/settings" <%= @cur_url == "/settings" ?
             raw("class=\"cur_url\"") : "" %>><%= @user.username %>
             (<%= @user.karma %>)</a>
 
-          <%= link_to "Logout", { :controller => "login", :action => "logout" },
-            :data => { :confirm => "Are you sure you want to logout?" },
+          <%= link_to "Выход", { :controller => "login", :action => "logout" },
+            :data => { :confirm => "Уверены, что хотите покинуть нас?" },
             :method => "post" %>
         <% else %>
-          <a href="/login">Login</a>
+          <a href="/login">Войти</a>
         <% end %>
         </span>
       </div>
@@ -104,15 +108,27 @@
       <%= yield %>
 
       <div id="footer">
-        <a href="/moderations">Moderation Log</a>
+        <a href="/moderations">Лог модерации</a>
         <% if @user && (iqc = InvitationRequest.verified_count) > 0 %>
-          <a href="/invitations">Invitation Queue (<%= iqc %>)</a>
+          <a href="/invitations">Запросы инвайтов (<%= iqc %>)</a>
         <% end %>
-        <a href="/privacy">Privacy</a>
-        <a href="/about">About</a>
+        <a href="/privacy">Конфиденциальность</a>
+        <a href="/about">О сайте</a>
       </div>
       <div class="clear"></div>
     </div>
   </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-1360700-46', 'develop.re');
+  ga('send', 'pageview');
+
+</script>
+
 </body>
 </html>

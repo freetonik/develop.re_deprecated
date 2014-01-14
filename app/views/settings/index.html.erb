@@ -1,16 +1,16 @@
 <div class="box wide">
   <div class="legend right">
-    <a href="/u/<%= @user.username %>">View Profile</a>
+    <a href="/u/<%= @user.username %>">Публичный профиль</a>
   </div>
   <div class="legend">
-    Account Settings
+    Настройки
   </div>
 
   <%= form_for @edit_user, :url => settings_url, :method => :post do |f| %>
     <%= error_messages_for f.object %>
 
     <div class="boxline">
-      <%= f.label :username, "Username:", :class => "required" %>
+      <%= f.label :username, "Имя:", :class => "required" %>
       <%= f.text_field :username, :size => 15 %>
       <span class="hint">
         <tt>[A-Za-z0-9][A-Za-z0-9_-]*</tt>
@@ -18,22 +18,22 @@
     </div>
 
     <div class="boxline">
-      <%= f.label :password, "New Password:", :class => "required" %>
+      <%= f.label :password, "Новый пароль:", :class => "required" %>
       <%= f.password_field :password, :size => 40, :autocomplete => "off" %>
     </div>
 
     <div class="boxline">
-      <%= f.label :password_confirmation, "Confirm Password:",
+      <%= f.label :password_confirmation, "Подтвердить пароль:",
         :class => "required" %>
       <%= f.password_field :password_confirmation, :size => 40,
         :autocomplete => "off" %>
     </div>
 
     <div class="boxline">
-      <%= f.label :email, "E-mail Address:", :class => "required" %>
+      <%= f.label :email, "E-mail:", :class => "required" %>
       <%= f.text_field :email, :size => 40 %>
       <span class="hint">
-        <a href="http://www.gravatar.com/" target="_blank">Gravatar</a>'ized
+        Аватар берется из <a href="http://www.gravatar.com/" target="_blank">Gravatar</a>
       </span>
     </div>
 
@@ -47,12 +47,12 @@
     <div class="boxline">
       <%= f.label :pushover_device, "Pushover Device:",
         :class => "required" %>
-      <%= f.text_field :pushover_device, :placeholder => "optional",
+      <%= f.text_field :pushover_device, :placeholder => "не обязательно",
         :size => 15 %>
     </div>
 
     <div class="boxline">
-      <%= f.label :about, "About:", :class => "required" %>
+      <%= f.label :about, "О себе:", :class => "required" %>
       <%= f.text_area :about, :size => "100x5", :style => "width: 600px;" %>
     </div>
 
@@ -60,7 +60,7 @@
       <div class="boxline markdown_help_toggler" style="margin-left: 9em;
       width: 600px;">
         <div class="markdown_help_label">
-          Markdown formatting available
+          Можно использовать Markdown
         </div>
 
         <div style="clear: both;"></div>
@@ -70,96 +70,66 @@
     </div>
 
     <div class="legend">
-      Comment Reply Notification Settings
+      Ответ на мой комментарий
     </div>
 
     <div class="boxline">
-      <%= f.label :email_replies, "Receive E-mail:", :class => "required" %>
+      <%= f.label :email_replies, "Получать e-mail:", :class => "required" %>
       <%= f.check_box :email_replies %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_replies, "Receive Pushover Alert:",
+      <%= f.label :pushover_replies, "Получать Pushover:",
         :class => "required" %>
       <%= f.check_box :pushover_replies %>
       <span class="hint">
-        Requires user key entered above
+        Необходимо ввести User Key выше
       </span>
     </div>
 
     <br>
 
     <div class="legend">
-      Comment Mention Notification Settings
+      Упоминание меня в комментарии
     </div>
 
     <div class="boxline">
-      <%= f.label :email_mentions, "Receive E-mail:", :class => "required" %>
+      <%= f.label :email_mentions, "Получать e-mail:", :class => "required" %>
       <%= f.check_box :email_mentions %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_mentions, "Receive Pushover Alert:",
+      <%= f.label :pushover_mentions, "Получать Pushover:",
         :class => "required" %>
       <%= f.check_box :pushover_mentions %>
       <span class="hint">
-        Requires user key entered above
+        Необходимо ввести User Key выше
       </span>
     </div>
 
     <br>
 
     <div class="legend">
-      Private Message Notification Settings
+      Личные сообщения
     </div>
 
     <div class="boxline">
-      <%= f.label :email_messages, "Receive E-mail:", :class => "required" %>
+      <%= f.label :email_messages, "Получать e-mail:", :class => "required" %>
       <%= f.check_box :email_messages %>
     </div>
 
     <div class="boxline">
-      <%= f.label :pushover_messages, "Receive Pushover Alert:",
+      <%= f.label :pushover_messages, "Получать Pushover:",
         :class => "required" %>
       <%= f.check_box :pushover_replies %>
       <span class="hint">
-        Requires user key entered above
+        Необходимо ввести User Key выше
       </span>
     </div>
 
     <br>
 
-    <div class="legend">
-      Mailing List Settings
-    </div>
-
-    <p>
-    When enabled, you will receive all newly submitted stories and comments to
-    your e-mail address entered above, except those stories (and their
-    comments) filtered by your <a href="/filters">tag filters</a>.  All e-mail
-    messages will appear to be sent to your private list address shown below
-    which you can filter on, and e-mails you send to that address will be
-    posted under your account on this website.  You should keep your unique
-    list address private to prevent others from posting comments as you.
-    </p>
-
-    <div class="boxline">
-      <%= f.label :mailing_list_enabled, "Receive List E-mails:",
-        :class => "required" %>
-      <%= f.check_box :mailing_list_enabled%>
-    </div>
-
-    <div class="boxline">
-      <%= f.label :pushover_messages, "List Address:",
-        :class => "required" %>
-      <span>
-      <tt><%= Rails.application.shortname %>-<%=
-        @edit_user.mailing_list_token %>@<%= Rails.application.domain %></tt>
-      </span>
-    </div>
-
-    <br>
-    <%= f.submit "Save All Settings" %>
+    <%= f.submit "Сохранить все настройки" %>
   <% end %>
 
   <br>
@@ -167,7 +137,7 @@
 
   <a name="invite"></a>
   <div class="legend">
-    Invite a New User
+   Выслать инвайт
   </div>
 
   <%= render :partial => "users/invitationform" %>

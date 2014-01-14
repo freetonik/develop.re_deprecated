@@ -1,15 +1,14 @@
-Hello <%= @invitation_request.email %>,
+Здравствуйте, <%= @invitation_request.email %>,
 
-Someone at <%= @invitation_request.ip_address %> has submitted an invitation request to
-<%= Rails.application.name %>.
+Кто-то запросил инвайт на <%= Rails.application.name %> с адреса 
+<%= @invitation_request.ip_address %>.
 
-  Name: <%= @invitation_request.name %>
+  Имя: <%= @invitation_request.name %>
   E-mail: <%= @invitation_request.email %> (won't be displayed to other users)
-  Memo: <%= @invitation_request.memo %>
+  Заметка: <%= @invitation_request.memo %>
 
-If this is you, visit the URL below to confirm your request and
-display it to other logged-in users.
+Если это были вы, перейдите по ссылке ниже и подтвердите свой запрос чтобы другие пользователи видели его.
 
   <%= root_url %>invitations/confirm/<%= @invitation_request.code %>
 
-If this is not you, you can delete this message.
+Если это были не вы – просто удалите это письмо.

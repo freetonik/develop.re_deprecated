@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class CommentsController < ApplicationController
   COMMENTS_PER_PAGE = 20
 
@@ -9,7 +12,7 @@ class CommentsController < ApplicationController
 
   def create
     if !(story = Story.where(:short_id => params[:story_id]).first) || story.is_gone?
-      return render :text => "can't find story", :status => 400
+      return render :text => "ничего не найдено", :status => 400
     end
 
     comment = Comment.new
@@ -24,7 +27,7 @@ class CommentsController < ApplicationController
         # needed for carryng along in comment preview form
         comment.parent_comment_short_id = params[:parent_comment_short_id]
       else
-        return render :json => { :error => "invalid parent comment",
+        return render :json => { :error => "неверный родительский комментарий",
           :status => 400 }
       end
     end
@@ -33,9 +36,9 @@ class CommentsController < ApplicationController
     if !params[:preview].present? &&
     (pc = Comment.where(:story_id => story.id, :user_id => @user.id,
       :parent_comment_id => comment.parent_comment_id).first)
-      if (Time.now - pc.created_at) < 5.minutes
-        comment.errors.add(:comment, "^You have already posted a comment " <<
-          "here recently.")
+      if (Time.now - pc.created_at) < 1.minutes
+        comment.errors.add(:comment, "^Вы уже комментировали тут " <<
+          "совсем недавно.")
 
         return render :partial => "commentbox", :layout => false,
           :content_type => "text/html", :locals => { :story => story,
@@ -73,7 +76,7 @@ class CommentsController < ApplicationController
 
   def edit
     if !((comment = find_comment) && comment.is_editable_by_user?(@user))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "комментарий не найден", :status => 400
     end
 
     render :partial => "commentbox", :layout => false,
@@ -83,7 +86,7 @@ class CommentsController < ApplicationController
 
   def delete
     if !((comment = find_comment) && comment.is_deletable_by_user?(@user))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "комментарий не найден", :status => 400
     end
 
     comment.delete_for_user(@user)
@@ -95,7 +98,7 @@ class CommentsController < ApplicationController
 
   def undelete
     if !((comment = find_comment) && comment.is_undeletable_by_user?(@user))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "комментарий не найден", :status => 400
     end
 
     comment.undelete_for_user(@user)
@@ -107,7 +110,7 @@ class CommentsController < ApplicationController
 
   def update
     if !((comment = find_comment) && comment.is_editable_by_user?(@user))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "комментарий не найден", :status => 400
     end
 
     comment.comment = params[:comment]
@@ -130,7 +133,7 @@ class CommentsController < ApplicationController
 
   def preview
     if !((comment = find_comment) && comment.is_editable_by_user?(@user))
-      return render :text => "can't find comment", :status => 400
+      return render :text => "комментарий не найден", :status => 400
     end
 
     comment.comment = params[:comment]
@@ -145,7 +148,7 @@ class CommentsController < ApplicationController
 
   def unvote
     if !(comment = find_comment)
-      return render :text => "can't find comment", :status => 400
+      return render :text => "комментарий не найден", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(0, comment.story_id,
@@ -156,7 +159,7 @@ class CommentsController < ApplicationController
 
   def upvote
     if !(comment = find_comment)
-      return render :text => "can't find comment", :status => 400
+      return render :text => "комментарий не найден", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(1, comment.story_id,
@@ -167,11 +170,11 @@ class CommentsController < ApplicationController
 
   def downvote
     if !(comment = find_comment)
-      return render :text => "can't find comment", :status => 400
+      return render :text => "комментарий не найден", :status => 400
     end
 
     if !Vote::COMMENT_REASONS[params[:reason]]
-      return render :text => "invalid reason", :status => 400
+      return render :text => "неизвестная причина", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(-1, comment.story_id,
@@ -185,7 +188,7 @@ class CommentsController < ApplicationController
       "title=\"RSS 2.0\" href=\"/comments.rss" <<
       (@user ? "?token=#{@user.rss_token}" : "") << "\" />"
 
-    @heading = @title = "Newest Comments"
+    @heading = @title = "Новые комментарии"
     @cur_url = "/comments"
 
     @page = 1
@@ -220,14 +223,14 @@ class CommentsController < ApplicationController
   def threads
     if params[:user]
       @showing_user = User.where(:username => params[:user]).first!
-      @heading = @title = "Threads for #{@showing_user.username}"
+      @heading = @title = "Треды от #{@showing_user.username}"
       @cur_url = "/threads/#{@showing_user.username}"
     elsif !@user
       # TODO: show all recent threads
       return redirect_to "/login"
     else
       @showing_user = @user
-      @heading = @title = "Your Threads"
+      @heading = @title = "Мои треды"
       @cur_url = "/threads"
     end
 

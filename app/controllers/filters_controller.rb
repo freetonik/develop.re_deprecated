@@ -1,9 +1,12 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class FiltersController < ApplicationController
   before_filter :authenticate_user
 
   def index
     @cur_url = "/filters"
-    @title = "Filtered Tags"
+    @title = "Фильтры тегов"
 
     if @user
       @filtered_tags = @user.tag_filters.reload
@@ -47,7 +50,7 @@ class FiltersController < ApplicationController
       cookies.permanent[TAG_FILTER_COOKIE] = new_filters.join(",")
     end
 
-    flash[:success] = "Your filters have been updated."
+    flash[:success] = "Ваши фильтры сохранены."
     return redirect_to "/filters"
   end
 end

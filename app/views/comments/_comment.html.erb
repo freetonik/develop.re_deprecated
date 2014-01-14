@@ -19,40 +19,40 @@ class="comment <%= comment.current_vote ? (comment.current_vote[:vote] == 1 ?
     <div class="byline">
       <% if comment.previewing %>
         <a><%= comment.user.username %></a>
-        previewed
-        just now
+        предпросмотр
+        только что
       <% else %>
         <a href="/u/<%= comment.user.username %>"><%= comment.user.username
           %></a>
 
         <%= comment.has_been_edited?? "edited" : "" %>
-        <%= raw(time_ago_in_words_label(comment.has_been_edited? ?
-          comment.updated_at : comment.created_at).gsub(/^about /, "")) %> ago
-        <%= comment.is_from_email?? "via e-mail" : "" %>
+	<%= raw(comment.has_been_edited? ?
+          comment.updated_at.strftime("%d/%m/%Y в %I:%M%p") : comment.created_at.strftime("%d/%m/%Y в %I:%M%p")) %> 
+        <%= comment.is_from_email?? "через e-mail" : "" %>
       <% end %>
 
       <% if !comment.previewing %>
         |
         <a href="<%= story.comments_url %>/comments/<%= comment.short_id
-          %>">link</a>
+          %>">ссылка</a>
 
         <% if comment.is_editable_by_user?(@user) %>
           |
-          <a class="comment_editor">edit</a>
+          <a class="comment_editor">редактировать</a>
         <% end %>
 
         <% if comment.is_gone? && comment.is_undeletable_by_user?(@user) %>
           |
-          <a class="comment_undeletor">undelete</a>
+          <a class="comment_undeletor">восстановить</a>
         <% elsif !comment.is_gone? && comment.is_deletable_by_user?(@user) %>
           |
-          <a class="comment_deletor">delete</a>
+          <a class="comment_deletor">удалить</a>
         <% end %>
 
         <% if !story.is_gone? && !comment.is_gone? &&
         !(defined?(show_story) && show_story) %>
             |
-            <a class="comment_replier">reply</a>
+            <a class="comment_replier">ответить</a>
         <% end %>
 
         <span class="reason">
@@ -66,7 +66,7 @@ class="comment <%= comment.current_vote ? (comment.current_vote[:vote] == 1 ?
       <% end %>
 
       <% if defined?(show_story) && show_story %>
-        | on:
+        | &rarr;
         <a href="<%= story.comments_url %>"><%= story.title %></a>
       <% end %>
     </div>

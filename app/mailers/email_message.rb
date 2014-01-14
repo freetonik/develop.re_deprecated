@@ -1,3 +1,5 @@
+#!/bin/env ruby
+# encoding: utf-8
 class EmailMessage < ActionMailer::Base
   default :from => "#{Rails.application.name} " <<
     "<nobody@#{Rails.application.domain}>"
@@ -8,7 +10,7 @@ class EmailMessage < ActionMailer::Base
 
     mail(
       :to => user.email,
-      :subject => "[#{Rails.application.name}] Private Message from " <<
+      :subject => "[#{Rails.application.name}] личное сообщение от " <<
         "#{message.author.username}: #{message.subject}"
     )
   end

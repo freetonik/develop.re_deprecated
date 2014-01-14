@@ -20,8 +20,8 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
         <a href="<%= story.url_or_comments_url %>"><%= story.title %></a>
       <% end %>
       <% if story.is_gone? %>
-        [Story removed by <%= story.is_moderated? ? "moderator" :
-          "original submitter" %>]
+        [Топик удален <%= story.is_moderated? ? "модератором" :
+          "автором" %>]
       <% end %>
     </span>
     <% if story.can_be_seen_by_user?(@user) %>
@@ -38,39 +38,38 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
     <div class="byline">
       <% if story.previewing %>
         by <a><%= story.user.username %></a>
-        just now
+        только что
       <% else %>
         by <a href="/u/<%= story.user.username %>"><%= story.user.username
-          %></a> <%= raw(time_ago_in_words_label(story.created_at).
-          gsub(/^about /, "")) %> ago
+          %></a> <%= raw(story.created_at.strftime("%d/%m/%Y в %I:%M%p")) %> 
 
         <% if story.is_editable_by_user?(@user) %>
           |
-          <a href="<%= edit_story_url(story.short_id) %>">edit</a>
+          <a href="<%= edit_story_url(story.short_id) %>">редактировать</a>
 
           <% if story.is_gone? && story.is_undeletable_by_user?(@user) %>
             |
-            <%= link_to "undelete", story_undelete_url(story.short_id),
+            <%= link_to "восстановить", story_undelete_url(story.short_id),
               :method => :post, :data => {
-              :confirm => "Are you sure you want to undelete this story?" } %>
+              :confirm => "Уверены, что хотите восстановить этот топик?" } %>
           <% elsif !story.is_gone? %>
             |
             <% if story.user_id != @user.try(:id) &&
             @user.try(:is_moderator?) %>
-              <%= link_to "delete", story_url(story.short_id),
+              <%= link_to "удалить", story_url(story.short_id),
                 :method => :delete, :class => "mod_story_link" %>
             <% else %>
-              <%= link_to "delete", story_url(story.short_id),
+              <%= link_to "удалить", story_url(story.short_id),
                 :method => :delete, :data => {
-                :confirm => "Are you sure you want to delete this story?" } %>
+                :confirm => "Уверены, что хотите удалить этот топик?" } %>
             <% end %>
           <% end %>
         <% end %>
         <% if !story.is_gone? %>
           |
           <a href="<%= story.comments_url %>"><%=
-            (c = story.comment_count) == 0 ? "discuss" :
-            "#{c} comment#{c == 1 ? "" : "s"}" %></a>
+            (c = story.comment_count) == 0 ? "обсудить" :
+            "комментариев: #{c}" %></a>
         <% end %>
 
         <% if defined?(single_story) && single_story %>

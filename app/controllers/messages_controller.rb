@@ -1,10 +1,13 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class MessagesController < ApplicationController
   before_filter :require_logged_in_user
   before_filter :find_message, :only => [ :show, :destroy, :keep_as_new ]
 
   def index
     @cur_url = "/messages"
-    @title = "Messages"
+    @title = "Сообщения"
 
     @new_message = Message.new
 
@@ -18,7 +21,7 @@ class MessagesController < ApplicationController
 
   def sent
     @cur_url = "/messages"
-    @title = "Messages Sent"
+    @title = "Отправленные сообщения"
 
     @direction = :out
     @messages = @user.undeleted_sent_messages
@@ -39,7 +42,7 @@ class MessagesController < ApplicationController
     @messages = @user.undeleted_received_messages
 
     if @new_message.save
-      flash[:success] = "Your message has been sent to " <<
+      flash[:success] = "Ваше сообщение отправлено пользователю " <<
         @new_message.recipient.username.to_s << "."
       return redirect_to "/messages"
     else
@@ -78,7 +81,7 @@ class MessagesController < ApplicationController
 
     @message.save!
 
-    flash[:success] = "Deleted message."
+    flash[:success] = "Удаленное сообщение."
 
     if @message.author_user_id == @user.id
       return redirect_to "/messages/sent"
@@ -103,7 +106,7 @@ private
       end
     end
 
-    flash[:error] = "Could not find message."
+    flash[:error] = "Невозможно найти сообщение."
     redirect_to "/messages"
     return false
   end

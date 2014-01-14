@@ -1,8 +1,11 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class SettingsController < ApplicationController
   before_filter :require_logged_in_user
 
   def index
-    @title = "Account Settings"
+    @title = "Настройки"
 
     @edit_user = @user.dup
   end
@@ -11,7 +14,7 @@ class SettingsController < ApplicationController
     @edit_user = @user.clone
 
     if @edit_user.update_attributes(params[:user])
-      flash.now[:success] = "Successfully updated settings."
+      flash.now[:success] = "Настройки успешно сохранены."
       @user = @edit_user
     end
 

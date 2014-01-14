@@ -1,7 +1,9 @@
-Hello <%= @invitation.email %>,
+Здравствуйте!
 
-The user <%= @invitation.user.username %> has invited you to <%= Rails.application.name %> (<%= root_url %>)<%= @invitation.memo.present? ? raw("\n\n   #{@invitation.memo}") : "" %>
+Пользователь <%= @invitation.user.username %> приглашает вас на социальный агрегатор ссылок для программистов <%= Rails.application.name %> (<%= root_url %>)<%= @invitation.memo.present? ? raw("\n\n   #{@invitation.memo}") : "" %>
 
-To accept this invitation and create an account, visit the URL below:
+Чтобы принять приглашение и создать себе аккаунт – перейдите по ссылке ниже:
 
 <%= root_url %>invitations/<%= @invitation.code %>
+
+(Это письмо выслано на адрес <%= @invitation.email %>)

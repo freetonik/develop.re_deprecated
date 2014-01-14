@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class EmailReply < ActionMailer::Base
   default :from => "#{Rails.application.name} " <<
     "<nobody@#{Rails.application.domain}>"
@@ -8,7 +11,7 @@ class EmailReply < ActionMailer::Base
 
     mail(
       :to => user.email,
-      :subject => "[#{Rails.application.name}] Reply from " <<
+      :subject => "[#{Rails.application.name}] Ответ на комментарий от " <<
         "#{comment.user.username} on #{comment.story.title}"
     )
   end
@@ -19,7 +22,7 @@ class EmailReply < ActionMailer::Base
 
     mail(
       :to => user.email,
-      :subject => "[#{Rails.application.name}] Mention from " <<
+      :subject => "[#{Rails.application.name}] Упоминание от " <<
         "#{comment.user.username} on #{comment.story.title}"
     )
   end

@@ -1,6 +1,9 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class ModerationsController < ApplicationController
   def index
-    @title = "Moderation Log"
+    @title = "Лог модерации"
 
     @pages = Moderation.count
     @page = params[:page] ? params[:page].to_i : 0

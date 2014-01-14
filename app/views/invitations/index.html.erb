@@ -1,19 +1,19 @@
 <div class="box wide">
   <div class="legend">
-    Requested Invitations
+    Запросы инвайтов
   </div>
 
   <p>
-  These persons have requested invitations and confirmed their e-mail
-  addresses.  If you recognize anyone, feel free to send them an invitation and
-  remove their request.  Spam will be cleared out by a moderator.
+  Эти люди запросили инвайт на наш сайт и подтвердили свой e-mail.
+  Вы можете приглашать на сайт любое количество людей из списка, но не забывайте об ответственности за их действия.
+  Спамовые запросы удаляются модератором.
   </p>
 
   <table class="data" width="100%" cellspacing=0>
   <tr>
-    <th width="15%">Date/Time</th>
-    <th width="20%">Name</th>
-    <th width="50%">Memo</th>
+    <th width="15%">Дата/время</th>
+    <th width="20%">Имя</th>
+    <th width="50%">Ссылка</th>
     <th width="15%"></th>
   </tr>
   <% bit = 0 %>
@@ -22,18 +22,17 @@
       <td><%= ir.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
       <td><%= ir.name %></td>
       <td><%= raw ir.markeddown_memo %></td>
-      <td><%= form_tag send_invitation_for_request_url, :confirm => "Are " <<
-      "you sure you want to invite this person and remove this request?" do %>
+      <td><%= form_tag send_invitation_for_request_url, :confirm => "Вы " <<
+      "уверены что хотите пригласить этого человека на сайт и удалить эту заявку?" do %>
         <%= hidden_field_tag "code", ir.code %>
-        <%= submit_tag "Send Invitiation" %>
+        <%= submit_tag "Выслать инвайт" %>
       <% end %></td>
     </tr>
     <% bit = (bit == 1 ? 0 : 1) %>
   <% end %>
   <% if @invitation_requests.count == 0 %>
     <tr>
-      <td colspan=4 align="center"><span class="na">No invitation
-        requests</span></td>
+      <td colspan=4 align="center"><span class="na">Запросов нет</span></td>
     </tr>
   <% end %>
   </table>

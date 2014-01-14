@@ -2,7 +2,7 @@
   <div class="legend">
     <%= @showing_user.username %>
     <% if @user %>
-      (<a href="/messages?to=<%= @showing_user.username %>">Send a Message</a>)
+      (<a href="/messages?to=<%= @showing_user.username %>">отправить сообщение</a>)
     <% end %>
   </div>
 
@@ -10,59 +10,59 @@
     <img src="<%= @showing_user.avatar_url %>">
   </div>
 
-  <label class="required">Status:</label>
+  <label class="required">Статус:</label>
   <span class="d">
-    Active <%= @showing_user.is_admin? ? "administrator" :
-      (@showing_user.is_moderator? ? "moderator" : "user") %>
+    <%= @showing_user.is_admin? ? "администратор" :
+      (@showing_user.is_moderator? ? "модератор" : "пользователь") %>
   </span>
   <br>
 
-  <label class="required">Joined:</label>
+  <label class="required">Зарегистрирован:</label>
   <span class="d">
-    <%= raw(time_ago_in_words_label(@showing_user.created_at)) %> ago
+    <%= raw(@showing_user.created_at.strftime("%d/%m/%Y")) %>
     <% if @showing_user.invited_by_user %>
-      by invitation from
+      по приглашению
       <a href="/u/<%= @showing_user.invited_by_user.username %>"><%=
         @showing_user.invited_by_user.username %></a>
     <% end %>
   </span>
   <br>
 
-  <label class="required">Karma:</label>
+  <label class="required">Карма:</label>
   <span class="d">
-    <%= @showing_user.karma %>, averaging <%=
+    <%= @showing_user.karma %>, в среднем <%=
       number_with_precision(@showing_user.average_karma, :precision => 2) %>
-      per story/comment
+      на каждый топик или комментарий
   </span>
   <br>
 
-  <label class="required">Stories Submitted:</label>
+  <label class="required">Добавлено топиков:</label>
   <span class="d">
     <% tag = @showing_user.most_common_story_tag %>
     <a href="/newest/<%= @showing_user.username %>"><%=
       @showing_user.stories_submitted_count %></a><%= tag ? ", " : "" %>
     <% if tag %>
-      most commonly tagged <a href="<%= tag_url(tag.tag) %>"
+      чаще всего с тегом <a href="<%= tag_url(tag.tag) %>"
         class="<%= tag.css_class %>" title="<%= tag.description %>"><%=
         tag.tag %></a>
     <% end %>
   </span>
   <br>
 
-  <label class="required">Comments Posted:</label>
+  <label class="required">Добавлено комментариев:</label>
   <span class="d">
     <a href="/threads/<%= @showing_user.username %>"><%=
       @showing_user.comments_posted_count %></a>
   </span>
   <br>
 
-  <label class="required">About:</label>
+  <label class="required">О себе:</label>
 
   <div id="user_about" class="shorten_first_p">
     <% if @showing_user.about.present? %>
       <%= raw @showing_user.linkified_about %>
     <% else %>
-      <span class="na">A mystery...</span>
+      <span class="na">Загадка... Наверное, программирует на VB и стесняется этого</span>
     <% end %>
   </div>
 </div>

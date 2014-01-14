@@ -1,11 +1,14 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class UsersController < ApplicationController
   def show
     @showing_user = User.where(:username => params[:id]).first!
-    @title = "User #{@showing_user.username}"
+    @title = "Пользователи #{@showing_user.username}"
   end
 
   def tree
-    @title = "Users"
+    @title = "Пользователи"
 
     users = User.order("id DESC").to_a
 
@@ -14,6 +17,6 @@ class UsersController < ApplicationController
   end
 
   def invite
-    @title = "Pass Along an Invitation"
+    @title = "Пригласите кого-нибудь тоже"
   end
 end

@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class InvitationRequestMailer < ActionMailer::Base
   default :from => "#{Rails.application.name} " <<
     "<nobody@#{Rails.application.domain}>"
@@ -7,8 +10,8 @@ class InvitationRequestMailer < ActionMailer::Base
 
     mail(
       :to => invitation_request.email,
-      subject: "[#{Rails.application.name}] Confirm your invitation " <<
-        "request to " << Rails.application.name
+      subject: "[#{Rails.application.name}] Подтвердите свой запрос инвайта на " <<
+         Rails.application.name
     )
   end
 end

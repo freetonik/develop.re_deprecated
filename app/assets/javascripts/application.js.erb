@@ -7,10 +7,8 @@
 var _Lobsters = Class.extend({
   curUser: null,
 
-  storyDownvoteReasons: { <%= Vote::STORY_REASONS.map{|k,v|
-      "#{k.inspect}: #{v.inspect}" }.join(", ") %> },
-  commentDownvoteReasons: { <%= Vote::COMMENT_REASONS.map{|k,v|
-      "#{k.inspect}: #{v.inspect}" }.join(", ") %> },
+  storyDownvoteReasons: { "O": "Оффтопик", "Q": "Низкое качество", "A": "Уже публиковалось", "T": "Плохие теги", "L": "Плохой заголовок", "S": "Спам", "": "Отмена" },
+  commentDownvoteReasons: { "O": "Оффтопик", "I": "Неправильно", "M": "Плюсадинство", "T": "Тролль", "S": "Спам", "": "Отмена" },
 
   upvote: function(voterEl) {
     Lobsters.vote("story", voterEl, 1);
@@ -255,7 +253,7 @@ $(document).ready(function() {
     box.html($("#comment_form").clone());
     box.find("ol").remove();
 
-    box.find("button.comment-preview").after("&nbsp;\n&nbsp;<button class=\"comment-cancel\" name=\"button\" type=\"button\">Cancel</button>");
+    box.find("button.comment-preview").after("&nbsp;\n&nbsp;<button class=\"comment-cancel\" name=\"button\" type=\"button\">Отмена</button>");
 
     box.find("textarea").focus();
 

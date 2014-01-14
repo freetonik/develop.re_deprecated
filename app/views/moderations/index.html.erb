@@ -1,13 +1,13 @@
 <div class="box wide">
   <div class="legend">
-    Moderation Log
+    Лог модерации
   </div>
 
   <table class="data" width="100%" cellspacing=0>
   <tr>
-    <th width="15%">Date/Time</th>
-    <th width="10%">Moderator</th>
-    <th width="75%">Story/Comment/User, Changes, Reason</th>
+    <th width="15%">Дата/вреия</th>
+    <th width="10%">Модератор</th>
+    <th width="75%">Топик/комментарий/юзер, изменение, причина</th>
   </tr>
   <% bit = 0 %>
   <% @moderations.each do |mod| %>
@@ -16,23 +16,23 @@
       <td><a href="/messages?to=<%= mod.moderator.try(:username) %>"><%=
         mod.moderator.try(:username) %></a></td>
       <td><% if mod.story %>
-          <a href="<%= mod.story.comments_url %>">Story: <%= mod.story.title
+          <a href="<%= mod.story.comments_url %>">Топик: <%= mod.story.title
             %></a>
         <% elsif mod.comment %>
-          <a href="<%= mod.comment.url %>">Comment on <%=
+          <a href="<%= mod.comment.url %>">Комментарий к <%=
             mod.comment.story.title %></a>
         <% elsif mod.user %>
-          User <%= mod.user.try(:username) %>
+          Пользователь <%= mod.user.try(:username) %>
         <% end %></td>
     </tr>
     <tr class="row<%= bit %> <%= mod.reason.present?? "nobottom" : "" %>">
       <td colspan=2></td>
-      <td>Action: <em><%= mod.action %></em></td>
+      <td>Действие: <em><%= mod.action %></em></td>
     </tr>
     <% if mod.reason.present? %>
       <tr class="row<%= bit %>">
         <td colspan=2></td>
-        <td>Reason: <em><%= mod.reason %></em></td>
+        <td>Причина: <em><%= mod.reason %></em></td>
       </tr>
     <% end %>
     <% bit = (bit == 1 ? 0 : 1) %>
@@ -42,7 +42,7 @@
 
 <div class="morelink">
   <% if @page > 1 %>
-    <a href="/moderations/page/<%= @page - 1 %>">&lt;&lt; Page
+    <a href="/moderations/page/<%= @page - 1 %>">&lt;&lt; Страница
       <%= @page - 1 %></a>
   <% end %>
 
@@ -50,7 +50,7 @@
     <% if @page > 1 %>
       |
     <% end %>
-    <a href="/moderations/page/<%= @page + 1 %>">Page <%= @page + 1
+    <a href="/moderations/page/<%= @page + 1 %>">Страница <%= @page + 1
       %> &gt;&gt;</a>
   <% end %>
 </div>

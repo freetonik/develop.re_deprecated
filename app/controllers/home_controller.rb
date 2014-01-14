@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class HomeController < ApplicationController
   STORIES_PER_PAGE = 25
 
@@ -19,7 +22,7 @@ class HomeController < ApplicationController
       format.html { render :action => "index" }
       format.rss {
         if @user && params[:token].present?
-          @title = "Private feed for #{@user.username}"
+          @title = "Персональный фид для #{@user.username}"
         end
 
         render :action => "rss", :layout => false
@@ -32,7 +35,7 @@ class HomeController < ApplicationController
     @stories = find_stories_for_user_and_tag_and_newest_and_by_user(@user,
       nil, true, nil)
 
-    @heading = @title = "Newest Stories"
+    @heading = @title = "Новое"
     @cur_url = "/newest"
 
     @rss_link = "<link rel=\"alternate\" type=\"application/rss+xml\" " <<
@@ -45,7 +48,7 @@ class HomeController < ApplicationController
       format.html { render :action => "index" }
       format.rss {
         if @user && params[:token].present?
-          @title += " - Private feed for #{@user.username}"
+          @title += " - Персональный фид для #{@user.username}"
         end
 
         render :action => "rss", :layout => false
@@ -60,7 +63,7 @@ class HomeController < ApplicationController
     @stories = find_stories_for_user_and_tag_and_newest_and_by_user(@user,
       nil, false, for_user.id)
 
-    @heading = @title = "Newest Stories by #{for_user.username}"
+    @heading = @title = "Новые топики от #{for_user.username}"
     @cur_url = "/newest/#{for_user.username}"
 
     @newest = true
@@ -93,17 +96,66 @@ class HomeController < ApplicationController
       render :action => "privacy"
     rescue
       render :text => "<div class=\"box wide\">" <<
-        "You apparently have no privacy." <<
+	"<div class=\"legend\">Конфиденциальность</div>" <<
+        "Это же интернет, какая к черту конфиденциальность?!." <<
         "</div>", :layout => "application"
     end
   end
 
-  def about
+def about
     begin
       render :action => "about"
     rescue
       render :text => "<div class=\"box wide\">" <<
-        "A mystery." <<
+        "<div class=\"legend\">О сайте</div>" <<
+        "<div class=\"story_text\">" <<
+        "<p>Develop.re – социальный агрегатор ссылок для программистов и гиков. " <<
+        "Он напоминает <a href=\"https://news.ycombinator.com/\">Hacker News</a> и " <<
+        "<a href=\"http://reddit.com/\">Reddit</a>, но имеет интересные особенности." <<
+        "</p>" <<
+
+        "<p>" <<
+        "<strong>Политика прозрачности</strong><br>" <<
+        "Во избежания развития цензуры система использует политику прозрачности действий. " <<
+        "Все голосования пользователей и оценка топиков основаны на универсальном алгоритме, который " <<
+        "не имеет искуcственных приоритетов или наказаний, в отличие от, например, Hacker News." <<
+        "</p>" <<
+
+        "<p>" <<
+        "Все действия модераторов – <a href=\"https://develop.re/moderations\"> публичны</a>. Если модератор забанил пользователя, " <<
+        "то в профиле пользователя будет указан забанивший его модератор и причина." <<
+        "</p>" <<
+
+        "<p>" <<
+        "Develop.re основан на Rails-приложении Lobsters Джошуа Штайна. Код приложения распространяется бесплатно на " <<
+        "<a href=\"https://github.com/jcs/lobsters\">Github</a>." <<
+        "</p>" <<        
+
+        "<p>" <<
+        "<strong>Теги</strong><br>" <<
+        "При добавлении ссылка/топика необходимо указать один или несколько существующих " << 
+        "<a href=\"https://develop.re/filters\">тегов</a>. Пользователи могут фильтровать не интересные им темы по тегам." <<
+        "</p>" <<
+
+        "<p>" <<
+        "<strong>Дерево пользователей</strong><br>" <<
+        "Регистрация возможна только по приглашению. Это сделано для борьбы с некачественным контентом и спамом. " <<
+        "Новые пользователи приглашаются существующими. Также, гости могут " <<
+        "<a href=\"https://develop.re/invitations/request\">запросить приглашение публично</a>." <<
+        "</p>" <<
+
+        "<p>" <<
+        "Публичное <a href=\"https://develop.re/u\">дерево пользователей</a> позволяет проследить историю приглашений." <<
+        "Оно помогает повысить ответственность и обнаружить заговоры." <<
+        "</p>" <<
+
+        "<p>" <<
+        "<strong>Причины отрицательных оценок</strong><br>" <<
+        "Если пользователь голосует против топика или комментария, ему нужно выбрать одну из причин такого решения. " <<
+        "Причины голосования против комментария видны автору комментария. " <<
+        "Причины голосования против топиков видны всем." <<
+        "</p>" <<
+
         "</div>", :layout => "application"
     end
   end

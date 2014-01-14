@@ -1,24 +1,27 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class Vote < ActiveRecord::Base
   belongs_to :user
   belongs_to :story
 
   STORY_REASONS = {
-    "O" => "Off-topic",
-    "Q" => "Low Quality",
-    "A" => "Already Posted",
-    "T" => "Poorly Tagged",
-    "L" => "Poorly Titled",
-    "S" => "Spam",
-    "" => "Cancel",
+    "O" => "Оффтопик",
+    "Q" => "Низкое качество",
+    "A" => "Уже публиковалось",
+    "T" => "Плохие теги",
+    "L" => "Плохой заголовок",
+    "S" => "Спам",
+    "" => "Отмена",
   }
 
   COMMENT_REASONS = {
-    "O" => "Off-topic",
-    "I" => "Incorrect",
-    "M" => "Me-too",
-    "T" => "Troll",
-    "S" => "Spam",
-    "" => "Cancel",
+    "O" => "Оффтопик",
+    "I" => "Неправильно",
+    "M" => "Плюсадинство",
+    "T" => "Тролль",
+    "S" => "Спам",
+    "" => "Отмена",
   }
 
   attr_accessible nil

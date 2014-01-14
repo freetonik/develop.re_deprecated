@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class InvitationMailer < ActionMailer::Base
   default :from => "#{Rails.application.name} " <<
     "<nobody@#{Rails.application.domain}>"
@@ -7,7 +10,7 @@ class InvitationMailer < ActionMailer::Base
 
     mail(
       :to => invitation.email,
-      subject: "[#{Rails.application.name}] You have been invited to " <<
+      subject: "[#{Rails.application.name}] Вас пригласили на " <<
         Rails.application.name
     )
   end

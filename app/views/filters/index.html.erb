@@ -1,27 +1,25 @@
 <div class="box wide">
   <div class="legend">
-    Filtered Tags
+    Фильтр тегов
   </div>
 
   <p>
-  To hide stories from the home page that have been tagged with certain tags,
-  check them below.
+  Чтобы скрывать топики с определенным тегом с главной страницы отметьте эти теги ниже.
   </p>
 
   <% if !@user %>
     <p>
-    Since you are not logged in, your filters will be stored in a long-lasting
-    browser cookie.  To permanently store your tag filters and have them work
-    across browsers, <a href="/login">login</a> to your account.
+    Вы не авторизованы, поэтому ваши фильтры будут храниться в cookie браузера. 
+    Чтобы сохранить фильтры навсегда – <a href="/login">войдите</a> в свой аккаунт.
     </p>
   <% end %>
 
   <%= form_tag "/filters", :method => :post do %>
     <table class="data zebra" cellspacing=0 width="75%">
     <tr>
-      <th width="7%">Hide</th>
-      <th width="15%">Tag</th>
-      <th width="78%">Description</th>
+      <th width="7%">Скрыт</th>
+      <th width="15%">Тег</th>
+      <th width="78%">Описание</th>
     </tr>
     <% Tag.order(:tag).accessible_to(@user).each do |tag| %>
       <tr>
@@ -35,7 +33,7 @@
     <% end %>
     </table>
     <p>
-    <%= submit_tag "Save Filters" %>
+    <%= submit_tag "Сохранить фильтры" %>
     </p>
   <% end %>
 </div>

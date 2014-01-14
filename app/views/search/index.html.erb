@@ -1,47 +1,47 @@
 <div class="box">
   <div class="legend">
-    Search
+    Поиск
   </div>
 
   <%= form_tag "/search", :method => :get do %>
     <div class="boxline">
       <%= text_field_tag "q", @search.q, { :size => 40 }.
         merge(@search.q.present? ? {} : { :autofocus => "autofocus" }) %>
-      <input type="submit" value="Search">
+      <input type="submit" value="Поиск">
     </div>
 
     <div class="boxline">
-      <label class="required">Include:</label>
+      <label class="required">Включать:</label>
 
       <%= radio_button_tag "what", "all", @search.what == "all" %>
-        <label for="search_what_all" class="normal">All</label>
+        <label for="search_what_all" class="normal">Все</label>
 
       &nbsp;
 
       <%= radio_button_tag "what", "stories", @search.what == "stories" %>
-        <label for="search_what_stories" class="normal">Stories</label>
+        <label for="search_what_stories" class="normal">Топики</label>
 
       &nbsp;
 
       <%= radio_button_tag "what", "comments", @search.what == "comments" %>
-        <label for="search_what_comments" class="normal">Comments</label>
+        <label for="search_what_comments" class="normal">Комментарии</label>
 
       <br>
 
-      <label class="required">Order By:</label>
+      <label class="required">Сортировка:</label>
 
       <%= radio_button_tag "order", "relevance", @search.order == "relevance" %>
-        <label for="search_order_relevance" class="normal">Relevance</label>
+        <label for="search_order_relevance" class="normal">Значимость</label>
 
       &nbsp;
 
       <%= radio_button_tag "order", "newest", @search.order == "newest" %>
-        <label for="search_order_newest" class="normal">Newest</label>
+        <label for="search_order_newest" class="normal">Самое новое</label>
 
       &nbsp;
 
       <%= radio_button_tag "order", "points", @search.order == "points" %>
-        <label for="search_order_points" class="normal">Points</label>
+        <label for="search_order_points" class="normal">По голосам</label>
     </div>
   <% end %>
 </div>
@@ -71,7 +71,7 @@
 
   <% if @search.total_results > @search.per_page %>
     <div class="page_link_buttons">
-      Page:
+      Страница:
 
       <% 1.upto(@search.page_count) do |p| %>
         <a href="/search?<%= raw(@search.to_url_params) %>&amp;page=<%= p

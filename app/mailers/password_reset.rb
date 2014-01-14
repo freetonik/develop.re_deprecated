@@ -1,3 +1,5 @@
+#!/bin/env ruby
+# encoding: utf-8
 class PasswordReset < ActionMailer::Base
   default :from => "#{Rails.application.name} " <<
     "<nobody@#{Rails.application.domain}>"
@@ -8,7 +10,7 @@ class PasswordReset < ActionMailer::Base
 
     mail(
       :to => user.email,
-      :subject => "[#{Rails.application.name}] Reset your password"
+      :subject => "[#{Rails.application.name}] сброс пароля"
     )
   end
 end

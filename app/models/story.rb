@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class Story < ActiveRecord::Base
   belongs_to :user
   has_many :taggings,
@@ -29,14 +32,14 @@ class Story < ActiveRecord::Base
 
       if self.url.match(/\Ahttps?:\/\/([^\.]+\.)+[a-z]+(\/|\z)/)
         if self.new_record? && (s = Story.find_recent_similar_by_url(self.url))
-          errors.add(:url, "has already been submitted recently")
+          errors.add(:url, "уже был опубликован недавно")
           self.already_posted_story = s
         end
       else
-        errors.add(:url, "is not valid")
+        errors.add(:url, "неправильный")
       end
     elsif self.description.to_s.strip == ""
-      errors.add(:description, "must contain text if no URL posted")
+      errors.add(:description, "должен содержать текст если не указан URL")
     end
 
     check_tags
@@ -124,12 +127,12 @@ class Story < ActiveRecord::Base
     m.story_id = self.id
 
     if all_changes["is_expired"] && self.is_expired?
-      m.action = "deleted story"
+      m.action = "удалил топик"
     elsif all_changes["is_expired"] && !self.is_expired?
-      m.action = "undeleted story"
+      m.action = "восстановил топик"
     else
-      m.action = all_changes.map{|k,v| "changed #{k} from #{v[0].inspect} " <<
-        "to #{v[1].inspect}" }.join(", ")
+      m.action = all_changes.map{|k,v| "изменил #{k} с #{v[0].inspect} " <<
+        "на #{v[1].inspect}" }.join(", ")
     end
 
     m.reason = self.moderation_reason
@@ -157,16 +160,15 @@ class Story < ActiveRecord::Base
   def check_tags
     self.taggings.each do |t|
       if !t.tag.valid_for?(self.user)
-        raise "#{self.user.username} does not have permission to use " <<
-          "privileged tag #{t.tag.tag}"
+        raise "#{self.user.username} не имеет права использовать " <<
+          "тег #{t.tag.tag}"
       end
     end
 
     if !self.taggings.reject{|t| t.marked_for_destruction? || t.tag.is_media?
     }.any?
-      errors.add(:base, "Must have at least one non-media (PDF, video) " <<
-        "tag.  If no tags apply to your content, it probably doesn't " <<
-        "belong here.")
+      errors.add(:base, "Необходимо указать как минимум один не-медиа (PDF, видео, фото) тег." <<
+        "Если подходящий тег не находится – скорее всего вашей ссылке тут не место." )
     end
   end
 

@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class Message < ActiveRecord::Base
   belongs_to :recipient,
     :class_name => "User",
@@ -18,7 +21,7 @@ class Message < ActiveRecord::Base
 
   before_validation :assign_short_id,
     :on => :create
-  after_create :deliver_reply_notifications
+  after_create :deliver_email_notifications
   after_save :update_unread_counts
   after_save :check_for_both_deleted
 
@@ -36,24 +39,29 @@ class Message < ActiveRecord::Base
     self.recipient.update_unread_message_count!
   end
 
-  def deliver_reply_notifications
-    begin
-      if self.recipient.email_messages?
+  def deliver_email_notifications
+    if self.recipient.email_messages?
+      begin
         EmailMessage.notify(self, self.recipient).deliver
+      rescue => e
+        Rails.logger.error "error e-mailing #{self.recipient.email}: #{e}"
       end
+    end
 
-      if self.recipient.pushover_messages? &&
-      self.recipient.pushover_user_key.present?
+    if self.recipient.pushover_messages? &&
+    self.recipient.pushover_user_key.present?
+      begin
         Pushover.push(self.recipient.pushover_user_key,
           self.recipient.pushover_device, {
-          :title => "#{Rails.application.name} message from " <<
+          :title => "#{Rails.application.name} сообщение от " <<
             "#{self.author.username}: #{self.subject}",
           :message => self.plaintext_body,
           :url => self.url,
-          :url_title => "Reply to #{self.author.username}",
+          :url_title => "Ответить #{self.author.username}",
         })
+      rescue => e
+        Rails.logger.error "error sending pushover: #{e}"
       end
-    rescue
     end
   end
 
@@ -64,7 +72,7 @@ class Message < ActiveRecord::Base
       self.recipient_user_id = u.id
       @recipient_username = username
     else
-      errors.add(:recipient_username, "is not a valid user")
+      errors.add(:recipient_username, "не существует")
     end
   end
 
@@ -81,3 +89,4 @@ class Message < ActiveRecord::Base
     Rails.application.routes.url_helpers.root_url + "messages/#{self.short_id}"
   end
 end
+

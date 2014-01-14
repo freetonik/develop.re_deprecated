@@ -1,28 +1,27 @@
 <div class="box wide">
   <div class="legend">
-    Request an Invitation
+    Запрос инвайта
   </div>
 
   <p>
-  If you don't know (or can't find) an <a href="/u/">existing user</a> from
-  which to request an invitation, you can make a public request for one.  This
-  will display your name and memo to all other logged-in users who can then
-  send you an invitation if they recognize you.
+  Если вы не знаете (или не можете найти) <a href="/u/">существующего пользователя</a>
+  у кого можно было бы попросить инвайт, вы можете создать публичный запрос. Авторизованные
+  пользователи увидят ваше имя и ссылку, и кто-нибудь, возможно, вышлет вам инвайт.
   </p>
 
   <p>
-  Your e-mail address must be valid and confirmed by visiting a URL e-mailed to
-  you before your request will be displayed.  Your e-mail address will not be
-  shown to any other users.
+  Важно ввести правильный e-mail, на него будет выслана ссылка для подтверждения запроса.
+  Запрос станет публичным только после подтверждения.
+  Ваш e-mail не будет виден другим пользователям.
   </p>
 
   <%= form_tag create_invitation_by_request_url do %>
     <p>
-    <%= label_tag :name, "Name:" %>
+    <%= label_tag :name, "Имя:" %>
     <%= text_field_tag :name, "", :size => 30 %>
     <br />
 
-    <%= label_tag :email, "E-mail Address:" %>
+    <%= label_tag :email, "E-mail:" %>
     <%= text_field_tag :email, "", :size => 30 %>
     <br />
 
@@ -30,12 +29,11 @@
     <%= text_field_tag :memo, "", :size => 30 %>
     <br />
     <label></label>
-    <span class="na">URL to verify you (Personal website, Github account,
-      etc.)</span>
+    <span class="na">Что-нибудь характеризующее вас (личный сайт, блог, github и т.д.)</span>
     </p>
 
     <p>
-    <%= submit_tag "Request Invitation" %>
+    <%= submit_tag "Запросить инвайт" %>
     </p>
   <% end %>
 </div>

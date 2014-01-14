@@ -65,6 +65,11 @@ a.tag_ask, a.tag_project, a.tag_interview {
 	border-color: #f0b2b8;
 }
 
+a.tag_meta {
+	background-color: #eee;
+	border-color: #c8c8c8;
+}
+
 span.fakea {
 	cursor: pointer;
 	text-decoration: underline;
@@ -238,7 +243,7 @@ div#inside {
 }
 
 #l_holder {
-	background: #ee0000 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAAZiS0dEAL0ALQAtZF7+HAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wCCBAuLt2rqugAAACMSURBVDjL1ZMxCsJQEERfRPEk9im9mGfxBpaCnaXmBraeQEidKsKz2eIb/peEIOLAwu4Ws7PMbsUAKlOwYCaWmd4aWCV1B4yXpR59R61SitwKDdBHfgPaSTsF8zOmHz5NLykAeCRqvuvCfxGcgP0YF3ZqHy7c1Yt6jfo8dCF3idvkQjcRRVQ/f6bZBC+RBoeZnlCyqwAAAABJRU5ErkJggg==) no-repeat;
+	background: #ee0000 url(https://develop.re/images/logo.png);
 	background-position: center;
 	float: left;
 	display: block;
@@ -621,7 +626,7 @@ a.pagelink.curpage {
 
 #downvote_why {
 	position: absolute;
-	width: 100px;
+	width: 120px;
 	border: 1px solid #ccc;
 	border-bottom: 0;
 	z-index: 2;

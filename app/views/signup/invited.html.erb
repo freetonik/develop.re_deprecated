@@ -1,6 +1,6 @@
 <div class="box wide">
   <div class="legend">
-    Create an Account
+    Регистрация
   </div>
 
   <%= form_for @new_user, { :url => signup_url,
@@ -8,16 +8,15 @@
     <%= hidden_field_tag "invitation_code", @invitation.code %>
 
     <p>
-    To create a new account, enter your e-mail address and a password.
-    Your e-mail address will never be shown to users and will only be used
-    if you need to reset your password, or to receive optional new-message
-    alerts.  Your username can be changed later.
+    Введите свой e-mail и пароль. Ваш e-mail никогда не будет показан другим пользователям
+    и будет использован только для восстановления пароля и, если захотите, для оповещений.
+    Имя можно будет поменять позже.
     </p>
 
     <%= error_messages_for(@new_user) %>
 
     <p>
-    <%= f.label :invitation, "Invited By:", :class => "required" %>
+    <%= f.label :invitation, "Приглашение от:", :class => "required" %>
     <span class="d">
       <a href="/u/<%= @invitation.user.username %>" target="_blank"><%=
         @invitation.user.username %></a>
@@ -25,25 +24,25 @@
     </p>
 
     <p>
-    <%= f.label :username, "Username:", :class => "required" %>
+    <%= f.label :username, "Имя:", :class => "required" %>
     <%= f.text_field :username, :size => 30 %>
     <span class="hint">
       <tt>[A-Za-z0-9][A-Za-z0-9_-]*</tt>
     </span>
     <br />
 
-    <%= f.label :email, "E-mail Address:", :class => "required" %>
+    <%= f.label :email, "E-mail:", :class => "required" %>
     <%= f.email_field :email, :size => 30 %>
     <span class="hint">
-      <a href="http://www.gravatar.com/" target="_blank">Gravatar</a>'ized
+      Аватар берется из <a href="http://www.gravatar.com/" target="_blank">Gravatar</a>
     </span>
     <br />
 
-    <%= f.label :password, "Password:", :class => "required" %>
+    <%= f.label :password, "Пароль:", :class => "required" %>
     <%= f.password_field :password, :size => 30, :autocomplete => "off" %>
     <br />
 
-    <%= f.label :password_confirmation, "Password (again):",
+    <%= f.label :password_confirmation, "Пароль (еще разок):",
       :class => "required" %>
     <%= f.password_field :password_confirmation, :size => 30,
       :autocomplete => "off" %>
@@ -51,13 +50,13 @@
     </p>
 
     <p>
-    Want to tell us about yourself?  It's optional, but it will be visible in
-    your public profile and can be changed at any time.
+    Расскажите о себе, если хотите. Эта информация будет видна всем в вашем публичном профиле.
+    Ее можно изменить в любой момент.
     </p>
 
     <p>
     <div class="boxline">
-      <%= f.label :about, "About:", :class => "required" %>
+      <%= f.label :about, "Обо мне:", :class => "required" %>
       <%= f.text_area :about, :size => "100x5", :style => "width: 600px;" %>
     </div>
 
@@ -65,7 +64,7 @@
       <div class="boxline markdown_help_toggler"
         style="margin-left: 9em; width: 600px;">
         <div class="markdown_help_label">
-          Markdown formatting available
+          Можно использовать Markdown.
         </div>
 
         <div style="clear: both;"></div>
@@ -75,7 +74,7 @@
     </div>
 
     <p>
-    <%= submit_tag "Signup" %>
+    <%= submit_tag "Зарегистрироваться" %>
     </p>
   <% end %>
 </div>

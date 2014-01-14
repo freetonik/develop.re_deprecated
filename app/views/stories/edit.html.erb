@@ -1,6 +1,6 @@
 <div class="box" id="story_box">
   <div class="legend">
-    Edit Story
+    Редактирование топика
   </div>
 
   <%= form_for @story, :url => story_url(@story.short_id),
@@ -11,7 +11,7 @@
     <% if @story.user_id != @user.id %>
       <div class="box">
         <div class="boxline">
-          <%= f.label :moderation_reason, "Mod Reason:",
+          <%= f.label :moderation_reason, "Причина модерации:",
             :class => "required" %>
           <%= f.text_field :moderation_reason, :autocomplete => "off" %>
         </div>
@@ -23,12 +23,11 @@
     <div class="box">
       <div class="boxline markdown_help_toggler">
         <div class="markdown_help_label">
-          Markdown formatting available
+          Можно использовать Markdown
         </div>
 
-        <%= submit_tag "Save" %>
-        &nbsp;or <a href="<%= story_url(@story.short_id) %>">cancel
-          editing</a>
+        <%= submit_tag "Сохранить" %>
+        &nbsp;или <a href="<%= story_url(@story.short_id) %>">отменить редактирование</a>
 
         <div style="clear: both;"></div>
 

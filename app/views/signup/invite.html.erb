@@ -1,20 +1,18 @@
 <div class="box wide">
   <div class="legend">
-    Pass Along an Invitation
+    Передайте приглашение дальше
   </div>
 
   <p>
-  This community can only grow when members invite new users, just as
-  <strong><%= @user.invited_by_user.try(:username) %></strong> invited you.
-  Take a moment and invite someone you know.
+  Наше сообщество растет благодаря тому, что пользователи приглашают новых пользователей, 
+  как это сделал <strong><%= @user.invited_by_user.try(:username) %></strong> с вами.
+  Уделите несколько секунд и пригласите кого-нибудь сами.
   </p>
 
   <%= render :partial => "users/invitationform",
     :locals => { :return_home => true } %>
 
-  or
-
   <p>
-  <%= button_to "Skip", "/" %>
+  <%= button_to "Не сейчас", "/", :method => :get %>
   </p>
 </div>

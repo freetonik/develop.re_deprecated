@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :story
@@ -26,13 +29,13 @@ class Comment < ActiveRecord::Base
 
   validate do
     self.comment.to_s.strip == "" &&
-      errors.add(:comment, "cannot be blank.")
+      errors.add(:comment, "не может быть пустым.")
 
     self.user_id.blank? &&
-      errors.add(:user_id, "cannot be blank.")
+      errors.add(:user_id, "не может быть пустым.")
 
     self.story_id.blank? &&
-      errors.add(:story_id, "cannot be blank.")
+      errors.add(:story_id, "не может быть пустым.")
 
     (m = self.comment.to_s.strip.match(/\A(t)his([\.!])?$\z/i)) &&
       errors.add(:base, (m[1] == "T" ? "N" : "n") + "ope" + m[2].to_s)
@@ -103,11 +106,11 @@ class Comment < ActiveRecord::Base
 
   def gone_text
     if self.is_moderated?
-      "Thread removed by moderator " <<
+      "Тред удален модератором " <<
         self.moderation.try(:moderator).try(:username).to_s << ": " <<
-        (self.moderation.try(:reason) || "No reason given")
+        (self.moderation.try(:reason) || "без причины")
     else
-      "Comment removed by author"
+      "Комментарий удален автором."
     end
   end
 
@@ -129,11 +132,11 @@ class Comment < ActiveRecord::Base
 
           if u.pushover_mentions? && u.pushover_user_key.present?
             Pushover.push(u.pushover_user_key, u.pushover_device, {
-              :title => "#{Rails.application.name} mention by " <<
+              :title => "#{Rails.application.name} упоминание от " <<
                 "#{self.user.username} on #{self.story.title}",
               :message => self.plaintext_comment,
               :url => self.url,
-              :url_title => "Reply to #{self.user.username}",
+              :url_title => "Ответить #{self.user.username}",
             })
           end
         rescue => e
@@ -154,11 +157,11 @@ class Comment < ActiveRecord::Base
 
         if u.pushover_replies? && u.pushover_user_key.present?
           Pushover.push(u.pushover_user_key, u.pushover_device, {
-            :title => "#{Rails.application.name} reply from " <<
-              "#{self.user.username} on #{self.story.title}",
+            :title => "#{Rails.application.name} ответ от " <<
+              "#{self.user.username} в #{self.story.title}",
             :message => self.plaintext_comment,
             :url => self.url,
-            :url_title => "Reply to #{self.user.username}",
+            :url_title => "Ответить #{self.user.username}",
           })
         end
       rescue => e
@@ -183,7 +186,7 @@ class Comment < ActiveRecord::Base
       m = Moderation.new
       m.comment_id = self.id
       m.moderator_user_id = user.id
-      m.action = "deleted comment"
+      m.action = "удалил комментарий"
       m.save
     end
 
@@ -205,7 +208,7 @@ class Comment < ActiveRecord::Base
         m = Moderation.new
         m.comment_id = self.id
         m.moderator_user_id = user.id
-        m.action = "undeleted comment"
+        m.action = "восстановил комментарий"
         m.save
       end
     end

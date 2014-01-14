@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class InvitationsController < ApplicationController
   before_filter :require_logged_in_user,
     :except => [ :build, :create_by_request, :confirm_email ]
@@ -11,15 +14,14 @@ class InvitationsController < ApplicationController
 
   def confirm_email
     if !(ir = InvitationRequest.where(:code => params[:code].to_s).first)
-      flash[:error] = "Invalid or expired invitation request"
+      flash[:error] = "Запрос инвайта неверный или истек его срок годности"
       return redirect_to "/invitations/request"
     end
 
     ir.is_verified = true
     ir.save!
 
-    flash[:success] = "Your invitiation request has been validated and " <<
-      "will now be shown to other logged-in users."
+    flash[:success] = "Ваш запрос подтвержден и теперь будет показан другим пользователям. "
     return redirect_to "/invitations/request"
   end
 
@@ -32,14 +34,13 @@ class InvitationsController < ApplicationController
     begin
       if i.save
         i.send_email
-        flash[:success] = "Successfully e-mailed invitation to " <<
+        flash[:success] = "Приглашение выслано на " <<
           params[:email].to_s << "."
       else
         raise
       end
     rescue
-      flash[:error] = "Could not send invitation, verify the e-mail " <<
-        "address is valid."
+      flash[:error] = "Не удалось выслать приглашение, проверьте верность адреса. "
     end
 
     if params[:return_home]
@@ -58,7 +59,7 @@ class InvitationsController < ApplicationController
     ir.ip_address = request.remote_ip
 
     if ir.save
-      flash[:success] = "You have been e-mailed a confirmation to " <<
+      flash[:success] = "Вам выслано подтверждение на адрес " <<
         params[:email].to_s << "."
       return redirect_to "/invitations/request"
     else
@@ -68,7 +69,7 @@ class InvitationsController < ApplicationController
 
   def send_for_request
     if !(ir = InvitationRequest.where(:code => params[:code].to_s).first)
-      flash[:error] = "Invalid or expired invitation request"
+      flash[:error] = "Запрос неверный или истек его срок годности"
       return redirect_to "/invitations"
     end
 
@@ -80,7 +81,7 @@ class InvitationsController < ApplicationController
       if i.save
         i.send_email
         ir.destroy
-        flash[:success] = "Successfully e-mailed invitation to " <<
+        flash[:success] = "Приглашение выслано на имя " <<
           ir.name.to_s << "."
       end
 

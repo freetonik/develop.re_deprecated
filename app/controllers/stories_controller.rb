@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class StoriesController < ApplicationController
   before_filter :require_logged_in_user_or_400,
     :only => [ :upvote, :downvote, :unvote, :preview ]
@@ -8,7 +11,7 @@ class StoriesController < ApplicationController
   before_filter :find_user_story, :only => [ :destroy, :edit, :undelete, :update ]
 
   def create
-    @title = "Submit Story"
+    @title = "Добавить топик"
     @cur_url = "/stories/new"
 
     # we don't allow the url to be changed, so we have to set it manually
@@ -31,7 +34,7 @@ class StoriesController < ApplicationController
         Vote.vote_thusly_on_story_or_comment_for_user_because(1,
           @story.already_posted_story.id, nil, @user.id, nil)
 
-        flash[:success] = "This URL has already been submitted recently."
+        flash[:success] = "Этот URL уже публиковали недавно."
 
         return redirect_to @story.already_posted_story.comments_url
       end
@@ -42,7 +45,7 @@ class StoriesController < ApplicationController
 
   def destroy
     if !@story.is_editable_by_user?(@user)
-      flash[:error] = "You cannot edit that story."
+      flash[:error] = "Вы не можете редактировать этот топик."
       return redirect_to "/"
     end
 
@@ -60,11 +63,11 @@ class StoriesController < ApplicationController
 
   def edit
     if !@story.is_editable_by_user?(@user)
-      flash[:error] = "You cannot edit that story."
+      flash[:error] = "Вы не можете редактировать этот топик."
       return redirect_to "/"
     end
 
-    @title = "Edit Story"
+    @title = "Редактировать топик."
   end
 
   def fetch_url_title
@@ -79,7 +82,7 @@ class StoriesController < ApplicationController
   end
 
   def new
-    @title = "Submit Story"
+    @title = "Добавить топик"
     @cur_url = "/stories/new"
 
     @story = Story.new
@@ -90,7 +93,7 @@ class StoriesController < ApplicationController
       # if this story was already submitted, don't bother the user filling out
       # tags and stuff, just redirect them right away
       if s = Story.find_recent_similar_by_url(@story.url)
-        flash[:success] = "This URL has already been submitted recently."
+        flash[:success] = "Этот URL уже публиковали недавно."
         return redirect_to s.comments_url
       end
 
@@ -121,7 +124,7 @@ class StoriesController < ApplicationController
     if @story.can_be_seen_by_user?(@user)
       @title = @story.title
     else
-      @title = "[Story removed]"
+      @title = "[Топик удален]"
     end
 
     @short_url = @story.short_id_url
@@ -151,7 +154,7 @@ class StoriesController < ApplicationController
     @showing_comment = Comment.where(:short_id => params[:comment_short_id]).first
 
     if !@showing_comment
-      flash[:error] = "Could not find comment.  It may have been deleted."
+      flash[:error] = "Комментарий не найден. Возможно, его удалили."
       return redirect_to @story.comments_url
     end
 
@@ -175,7 +178,7 @@ class StoriesController < ApplicationController
   def undelete
     if !(@story.is_editable_by_user?(@user) &&
     @story.is_undeletable_by_user?(@user))
-      flash[:error] = "You cannot edit that story."
+      flash[:error] = "Вы не можете редактировать этот топик."
       return redirect_to "/"
     end
 
@@ -188,7 +191,7 @@ class StoriesController < ApplicationController
 
   def update
     if !@story.is_editable_by_user?(@user)
-      flash[:error] = "You cannot edit that story."
+      flash[:error] = "Вы не можете редактировать этот топик."
       return redirect_to "/"
     end
 
@@ -209,7 +212,7 @@ class StoriesController < ApplicationController
 
   def unvote
     if !(story = find_story)
-      return render :text => "can't find story", :status => 400
+      return render :text => "топик не найден", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(0, story.id,
@@ -220,7 +223,7 @@ class StoriesController < ApplicationController
 
   def upvote
     if !(story = find_story)
-      return render :text => "can't find story", :status => 400
+      return render :text => "топик не найден", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(1, story.id,
@@ -231,11 +234,11 @@ class StoriesController < ApplicationController
 
   def downvote
     if !(story = find_story)
-      return render :text => "can't find story", :status => 400
+      return render :text => "топик не найден", :status => 400
     end
 
     if !Vote::STORY_REASONS[params[:reason]]
-      return render :text => "invalid reason", :status => 400
+      return render :text => "неверная причина", :status => 400
     end
 
     Vote.vote_thusly_on_story_or_comment_for_user_because(-1, story.id,
@@ -259,8 +262,7 @@ private
     end
 
     if !@story
-      flash[:error] = "Could not find story or you are not authorized " <<
-        "to manage it."
+      flash[:error] = "Топик не существует или у вас недостаточно прав для управления им."
       redirect_to "/"
       return false
     end

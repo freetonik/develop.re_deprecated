@@ -18,13 +18,13 @@
 
     <div class="markdown_help_toggler">
       <div class="markdown_help_label">
-        Markdown formatting available
+        Можно использовать Markdown
       </div>
 
-      <%= button_tag "#{comment.new_record?? "Post" : "Update"} Comment",
+      <%= button_tag "#{comment.new_record?? "Отправить" : "Обновить"} комментарий",
         :class => "comment-post", :type => "button" %>
       &nbsp;
-      <%= button_tag "Preview Comment", :class => "comment-preview",
+      <%= button_tag "Предпросмотр", :class => "comment-preview",
         :type => "button" %>
 
       <div style="clear: both;"></div>

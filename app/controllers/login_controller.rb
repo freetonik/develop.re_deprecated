@@ -1,3 +1,6 @@
+#!/bin/env ruby
+# encoding: utf-8
+
 class LoginController < ApplicationController
   before_filter :authenticate_user
 
@@ -10,7 +13,7 @@ class LoginController < ApplicationController
   end
 
   def index
-    @title = "Login"
+    @title = "Вход"
     render :action => "index"
   end
 
@@ -22,12 +25,12 @@ class LoginController < ApplicationController
       return redirect_to "/"
     end
 
-    flash.now[:error] = "Invalid e-mail address and/or password."
+    flash.now[:error] = "Неправильный e-mail/логин или пароль."
     index
   end
 
   def forgot_password
-    @title = "Reset Password"
+    @title = "Сбросить пароль"
     render :action => "forgot_password"
   end
 
@@ -36,24 +39,23 @@ class LoginController < ApplicationController
       params[:email].to_s).first
 
     if !@found_user
-      flash.now[:error] = "Invalid e-mail address or username."
+      flash.now[:error] = "Неправильный e-mail или имя (логин)."
       return forgot_password
     end
 
     @found_user.initiate_password_reset_for_ip(request.remote_ip)
 
-    flash.now[:success] = "Password reset instructions have been e-mailed " <<
-      "to you."
+    flash.now[:success] = "Инструкции по сбросу пароля высланы на почту."
     return index
   end
 
   def set_new_password
-    @title = "Reset Password"
+    @title = "Сброс пароля"
 
     if params[:token].blank? ||
     !(@reset_user = User.where(:password_reset_token => params[:token].to_s).first)
-      flash[:error] = "Invalid reset token.  It may have already been " <<
-        "used or you may have copied it incorrectly."
+      flash[:error] = "Неправильный токен сброса. Возможно, его уже использовали, " <<
+        "или вы ошиблись при копировании ссылки."
       return redirect_to forgot_password_url
     end
 
