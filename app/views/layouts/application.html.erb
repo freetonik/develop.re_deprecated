@@ -44,7 +44,7 @@
 
         <% if @user %>
           <% links.merge!({ "/threads" => "Мои треды",
-            "/stories/new" => "Добавить топик" }) %>
+            "/stories/new" => "Добавить ссылку" }) %>
         <% end %>
 
         <% if @cur_url.present? && !links.keys.include?(@cur_url) &&

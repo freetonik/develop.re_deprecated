@@ -334,7 +334,7 @@ $(document).ready(function() {
     else if ($("#story_url").val().match(/[\/\.]((youtube|vimeo)\.com|youtu\.be)\//i)) {
       var ta = $("#story_tags_a").data("select2");
       if (ta.getVal().indexOf("video") < 0)
-        ta.addSelectedChoice({ id: "video" });
+        ta.addSelectedChoice({ id: "Video" });
     }
     /* if the url looks like a slide sharing site url, assign the slides tag */
     else if ($("#story_url").val().match(/[\/\.](slideshare\.net)\//i)) {
