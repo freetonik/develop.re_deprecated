@@ -13,7 +13,7 @@ class Story < ActiveRecord::Base
   validates_presence_of :user_id
 
   # after this many minutes old, a story cannot be edited
-  MAX_EDIT_MINS = 30
+  MAX_EDIT_MINS = 60
 
   attr_accessor :_comment_count
   attr_accessor :vote, :already_posted_story, :fetched_content, :previewing
