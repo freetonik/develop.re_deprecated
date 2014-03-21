@@ -442,6 +442,10 @@ li.comment a {
 	color: #666;
 }
 
+li.comment:target {
+	background-color: #f8f8f8;
+}
+
 ol.stories li:first-child {
 	padding-top: 0.5em;
 }
