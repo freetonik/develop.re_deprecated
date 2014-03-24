@@ -26,8 +26,8 @@ class="comment <%= comment.current_vote ? (comment.current_vote[:vote] == 1 ?
           %></a>
 
         <%= comment.has_been_edited?? "edited" : "" %>
-	<%= raw(comment.has_been_edited? ?
-          comment.updated_at.strftime("%d/%m/%Y в %I:%M%p") : comment.created_at.strftime("%d/%m/%Y в %I:%M%p")) %> 
+        <%= link_to(comment.has_been_edited? ?
+          comment.updated_at.strftime("%d/%m/%Y в %I:%M%p") : comment.created_at.strftime("%d/%m/%Y в %I:%M%p"), story_path(story.short_id, :anchor => "comment_#{comment.short_id}")) %>
         <%= comment.is_from_email?? "через e-mail" : "" %>
       <% end %>
 
