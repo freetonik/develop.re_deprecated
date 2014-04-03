@@ -573,6 +573,7 @@ div.story_text img {
 
 div.comment_text {
 	max-width: 700px;
+	overflow: hidden;
 }
 
 div.comment_text blockquote,
