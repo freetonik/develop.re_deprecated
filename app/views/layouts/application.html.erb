@@ -47,6 +47,8 @@
             "/stories/new" => "Добавить ссылку" }) %>
         <% end %>
 
+	<% links.merge!({ "/search" => "Поиск" }) %>
+
         <% if @cur_url.present? && !links.keys.include?(@cur_url) &&
         @heading.present? %>
           <span id="headertitle">
