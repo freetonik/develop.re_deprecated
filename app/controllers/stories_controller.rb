@@ -247,6 +247,28 @@ class StoriesController < ApplicationController
     render :text => "ok"
   end
 
+  def favorite
+    if !(story = find_story)
+      return render :text => "топик не найден", :status => 400
+    end
+
+    @user.favorite_stories << story
+
+    render :text => "ok"
+  end
+
+  def unfavorite
+    if !(story = find_story)
+      return render :text => "топик не найден", :status => 400
+    end
+
+    if favorite = @user.user_favorite_stories.where(:story => story).first
+      favorite.destroy
+    end
+
+    render :text => "ok"
+  end
+
 private
 
   def find_story

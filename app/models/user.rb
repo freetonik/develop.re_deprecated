@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
     :class_name => "Message",
     :foreign_key => "recipient_user_id"
   has_many :tag_filters
+  has_many :user_favorite_stories, :dependent => :destroy
+  has_many :favorite_stories, :through => :user_favorite_stories, :source => :story
   belongs_to :invited_by_user,
     :class_name => "User"
 
