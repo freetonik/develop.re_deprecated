@@ -515,6 +515,14 @@ li.story.expired a {
 	color: gray !important;
 }
 
+.favorited {
+	color: #ac130d;
+}
+
+li.story .not_favorited {
+	color: #888;
+}
+
 li.story .favorited:after {
 	content: "★";
 }

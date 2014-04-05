@@ -15,15 +15,6 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
     <% end %>
   </div>
   <div class="details">
-    <span class="favorites">
-      <% if @user %>
-        <% if story.favorited_by?(@user)%>
-          <a class="favorited"></a>
-        <% else %>
-          <a class="not_favorited"></a>
-        <% end %>
-      <% end %>
-    </span>
     <span class="link">
       <% if story.can_be_seen_by_user?(@user) %>
         <a href="<%= story.url_or_comments_url %>"><%= story.title %></a>
@@ -44,6 +35,15 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
       </span>
       <span class="domain"><%= story.domain %></span>
     <% end %>
+    <span class="favorites">
+      <% if @user %>
+        <% if story.favorited_by?(@user)%>
+          <a class="favorited"></a>
+        <% else %>
+          <a class="not_favorited"></a>
+        <% end %>
+      <% end %>
+    </span>
     <div class="byline">
       <% if story.previewing %>
         by <a><%= story.user.username %></a>
