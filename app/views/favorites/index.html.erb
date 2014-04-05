@@ -1,0 +1,18 @@
+<ol class="stories list">
+  <%= render :partial => "stories/listdetail", :collection => @stories,
+    :as => :story %>
+</ol>
+
+<div class="morelink">
+  <% if @page && @page > 1 %>
+    <a href="/favorites?page=<%= @page - 1 %>">&lt;&lt; Страница <%= @page - 1 %></a>
+  <% end %>
+
+  <% if @show_more %>
+    <% if @page && @page > 1 %>
+      |
+    <% end %>
+    <a href="/favorites?page=<%= @page + 1 %>">Страница
+      <%= @page + 1 %> &gt;&gt;</a>
+  <% end %>
+</div>

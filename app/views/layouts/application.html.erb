@@ -44,7 +44,8 @@
 
         <% if @user %>
           <% links.merge!({ "/threads" => "Мои треды",
-            "/stories/new" => "Добавить ссылку" }) %>
+            "/stories/new" => "Добавить ссылку",
+            "/favorites" => "Избранное" }) %>
         <% end %>
 
 	<% links.merge!({ "/search" => "Поиск" }) %>
