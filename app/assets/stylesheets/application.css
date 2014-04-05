@@ -515,6 +515,14 @@ li.story.expired a {
 	color: gray !important;
 }
 
+li.story .favorited:after {
+	content: "★";
+}
+
+li.story .not_favorited:after {
+	content: "☆";
+}
+
 li div.details,
 div.story_content {
 	margin-left: 40px;

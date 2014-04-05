@@ -138,6 +138,22 @@ var _Lobsters = Class.extend({
       action, { reason: reason });
   },
 
+  favorite: function(favoriterEl) {
+    $.post("/stories/" + $(favoriterEl).parents("li").first().attr("data-shortid") +
+      "/favorite")
+    .success(function(data) {
+      $(favoriterEl).attr("class", "favorited")
+    });
+  },
+
+  unfavorite: function(favoriterEl) {
+    $.post("/stories/" + $(favoriterEl).parents("li").first().attr("data-shortid") +
+      "/unfavorite")
+    .success(function(data) {
+      $(favoriterEl).attr("class", "not_favorited")
+    });
+  },
+
   postComment: function(form) {
     $(form).parent().load($(form).attr("action"), $(form).serializeArray());
   },
@@ -146,7 +162,7 @@ var _Lobsters = Class.extend({
     $(form).parent().load($(form).attr("action").replace(/(post|update)/,
       "preview"), $(form).serializeArray());
   },
-  
+
   previewStory: function(form) {
     $("#inside").load("/stories/preview", $(form).serializeArray());
   },
@@ -234,6 +250,15 @@ $(document).ready(function() {
   });
   $("li.story a.upvoter").click(function() {
     Lobsters.upvote(this);
+    return false;
+  });
+
+  $(document).on("click", "li.story a.favorited", function() {
+    Lobsters.unfavorite(this);
+    return false;
+  });
+  $(document).on("click", "li.story a.not_favorited", function() {
+    Lobsters.favorite(this);
     return false;
   });
 

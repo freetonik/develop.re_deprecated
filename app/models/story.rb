@@ -7,6 +7,7 @@ class Story < ActiveRecord::Base
     :autosave => true
   has_many :comments
   has_many :tags, :through => :taggings
+  has_many :favorites, :class_name => 'UserFavoriteStory'
 
   validates_length_of :title, :in => 3..150
   validates_length_of :description, :maximum => (64 * 1024)
@@ -394,5 +395,9 @@ class Story < ActiveRecord::Base
       nil).select{|c| !c.is_gone? }.count
 
     Keystore.put("story:#{self.id}:comment_count", alive_count)
+  end
+
+  def favorited_by?(user)
+    favorites.where(:user => user).any?
   end
 end

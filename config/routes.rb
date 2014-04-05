@@ -40,6 +40,8 @@ Lobsters::Application.routes.draw do
     post "downvote"
     post "unvote"
     post "undelete"
+    post "favorite"
+    post "unfavorite"
   end
   post "/stories/fetch_url_title" => "stories#fetch_url_title"
   post "/stories/preview" => "stories#preview"
@@ -88,6 +90,8 @@ Lobsters::Application.routes.draw do
 
   get "/moderations" => "moderations#index"
   get "/moderations/page/:page" => "moderations#index"
+
+  get "/favorites" => "favorites#index"
 
   get "/privacy" => "home#privacy"
   get "/about" => "home#about"
