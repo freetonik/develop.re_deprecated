@@ -17,7 +17,7 @@ class="story <%= story.vote == 1 ? "upvoted" : (story.vote == -1 ?
   <div class="details">
     <span class="link">
       <% if story.can_be_seen_by_user?(@user) %>
-        <a href="<%= story.url_or_comments_url %>"><%= story.title %></a>
+        <a href="<%= story.url_or_comments_url %>" target="_blank"><%= story.title %></a>
       <% end %>
       <% if story.is_gone? %>
         [Топик удален <%= story.is_moderated? ? "модератором" :
