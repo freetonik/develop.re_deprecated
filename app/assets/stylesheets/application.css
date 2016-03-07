@@ -468,7 +468,8 @@ li.negative_7 {
 }
 
 li.comment.highlighted {
-	background-color: #ffffbf;
+	background-color: #ffffef;
+	border-radius: 20px;
 }
 
 li .link {
