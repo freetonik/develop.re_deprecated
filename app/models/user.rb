@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
   end
 
   BANNED_USERNAMES = [ "admin", "administrator", "hostmaster", "mailer-daemon",
-    "postmaster", "root", "security", "support", "webmaster", ]
+    "postmaster", "root", "security", "support", "webmaster", "moderator", "moderators", ]
 
   def as_json(options = {})
     h = super(:only => [
