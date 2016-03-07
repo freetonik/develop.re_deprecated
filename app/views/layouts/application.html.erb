@@ -32,7 +32,7 @@
 <body>
   <div class="github-fork-ribbon-wrapper right">
       <div class="github-fork-ribbon">
-          <a target="_blank" href="https://github.com/freetonik/develop.re">Pull Request, maybe?</a>
+          <a target="_blank" href="https://github.com/freetonik/develop.re">Contribute</a>
       </div>
   </div>
 
@@ -68,7 +68,7 @@
 
         <span class="headerlinks">
           <% links.each do |u,v| %>
-            <a href="<%= u %>" <%= u == @cur_url ? raw("class=\"cur_url\"") :
+            <a href="<%= u %>" id="<%= u %>" <%= u == @cur_url ? raw("class=\"cur_url\"") :
               "" %>><%= v %></a>
           <% end %>
         </span>

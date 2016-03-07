@@ -36,7 +36,7 @@
   </span>
   <br>
 
-  <label class="required">Добавлено топиков:</label>
+  <label class="required">Топиков:</label>
   <span class="d">
     <% tag = @showing_user.most_common_story_tag %>
     <a href="/newest/<%= @showing_user.username %>"><%=
@@ -49,7 +49,7 @@
   </span>
   <br>
 
-  <label class="required">Добавлено комментариев:</label>
+  <label class="required">Комментариев:</label>
   <span class="d">
     <a href="/threads/<%= @showing_user.username %>"><%=
       @showing_user.comments_posted_count %></a>

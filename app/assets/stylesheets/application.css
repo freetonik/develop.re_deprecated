@@ -235,7 +235,7 @@ div#inside {
 	font-weight: bold;
 	padding: 5px 42px 5px 10px;
 	margin-top: 1em;
-	margin-bottom: 0.5em;
+	margin-bottom: 1.5em;
 }
 
 #headerleft {
@@ -279,6 +279,13 @@ div#inside {
 	color: #777;
 	text-decoration: none;
 	padding-right: 0.75em;
+}
+
+.headerlinks a#\/stories\/new {
+	background-color: rgba(255, 255, 0, 0.3);
+  padding: 5px 15px;
+  border-radius: 10px;
+	color: #0000B1;
 }
 
 #headerright {
@@ -1158,6 +1165,11 @@ div.fieldWithErrors {
   top: 0;
   z-index: 9999;
   pointer-events: none;
+	opacity: 0.2;
+}
+
+.github-fork-ribbon-wrapper:hover {
+	opacity: 1;
 }
 
 .github-fork-ribbon-wrapper.fixed {
@@ -1234,5 +1246,10 @@ div.fieldWithErrors {
 @media only screen and (max-width : 1024px) {
 	.github-fork-ribbon {
 		display: none;
+	}
+	.headerlinks a#\/stories\/new {
+		background-color: inherit;;
+	  padding: 0;
+		color: #0000B1;
 	}
 }
