@@ -50,7 +50,7 @@ class << Rails.application
   end
 
   def name
-    "develop.re"
+    "Hexlet News"
   end
 
   # used as mailing list prefix and countinual prefix, cannot have spaces
