@@ -5,7 +5,7 @@
 
 <div class="morelink">
   <% if @page && @page > 1 %>
-    <a href="/favorites?page=<%= @page - 1 %>">&lt;&lt; Страница <%= @page - 1 %></a>
+    <a href="/favorites?page=<%= @page - 1 %>">&larr; Страница <%= @page - 1 %></a>
   <% end %>
 
   <% if @show_more %>
@@ -13,6 +13,6 @@
       |
     <% end %>
     <a href="/favorites?page=<%= @page + 1 %>">Страница
-      <%= @page + 1 %> &gt;&gt;</a>
+      <%= @page + 1 %> &rarr;</a>
   <% end %>
 </div>

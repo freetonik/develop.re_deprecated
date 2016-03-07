@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140106205200) do
+ActiveRecord::Schema.define(version: 20140404200320) do
 
   create_table "comments", force: true do |t|
     t.datetime "created_at",                                                                    null: false
@@ -31,10 +31,10 @@ ActiveRecord::Schema.define(version: 20140106205200) do
     t.boolean  "is_from_email",                                                 default: false
   end
 
-  add_index "comments", ["confidence"], name: "confidence_idx", using: :btree
-  add_index "comments", ["short_id"], name: "short_id", unique: true, using: :btree
-  add_index "comments", ["story_id", "short_id"], name: "story_id_short_id", using: :btree
-  add_index "comments", ["thread_id"], name: "thread_id", using: :btree
+  add_index "comments", ["confidence"], name: "confidence_idx"
+  add_index "comments", ["short_id"], name: "short_id", unique: true
+  add_index "comments", ["story_id", "short_id"], name: "story_id_short_id"
+  add_index "comments", ["thread_id"], name: "thread_id"
 
   create_table "invitation_requests", force: true do |t|
     t.string   "code"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20140106205200) do
     t.integer "value", limit: 8
   end
 
-  add_index "keystores", ["key"], name: "key", unique: true, using: :btree
+  add_index "keystores", ["key"], name: "key", unique: true
 
   create_table "messages", force: true do |t|
     t.datetime "created_at"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20140106205200) do
     t.boolean  "deleted_by_recipient",                  default: false
   end
 
-  add_index "messages", ["short_id"], name: "random_hash", unique: true, using: :btree
+  add_index "messages", ["short_id"], name: "random_hash", unique: true
 
   create_table "moderations", force: true do |t|
     t.datetime "created_at",                         null: false
@@ -104,9 +104,9 @@ ActiveRecord::Schema.define(version: 20140106205200) do
     t.text     "story_cache",            limit: 2147483647
   end
 
-  add_index "stories", ["hotness"], name: "hotness_idx", using: :btree
-  add_index "stories", ["is_expired", "is_moderated"], name: "is_idxes", using: :btree
-  add_index "stories", ["url"], name: "url", length: {"url"=>191}, using: :btree
+  add_index "stories", ["hotness"], name: "hotness_idx"
+  add_index "stories", ["is_expired", "is_moderated"], name: "is_idxes"
+  add_index "stories", ["url"], name: "url"
 
   create_table "tag_filters", force: true do |t|
     t.datetime "created_at", null: false
@@ -115,14 +115,14 @@ ActiveRecord::Schema.define(version: 20140106205200) do
     t.integer  "tag_id"
   end
 
-  add_index "tag_filters", ["user_id", "tag_id"], name: "user_tag_idx", using: :btree
+  add_index "tag_filters", ["user_id", "tag_id"], name: "user_tag_idx"
 
   create_table "taggings", force: true do |t|
     t.integer "story_id", null: false
     t.integer "tag_id",   null: false
   end
 
-  add_index "taggings", ["story_id", "tag_id"], name: "story_id_tag_id", unique: true, using: :btree
+  add_index "taggings", ["story_id", "tag_id"], name: "story_id_tag_id", unique: true
 
   create_table "tags", force: true do |t|
     t.string  "tag",         limit: 25,  default: "",    null: false
@@ -131,7 +131,16 @@ ActiveRecord::Schema.define(version: 20140106205200) do
     t.boolean "is_media",                default: false
   end
 
-  add_index "tags", ["tag"], name: "tag", unique: true, using: :btree
+  add_index "tags", ["tag"], name: "tag", unique: true
+
+  create_table "user_favorite_stories", force: true do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "story_id"
+    t.integer  "user_id"
+  end
+
+  add_index "user_favorite_stories", ["user_id", "story_id"], name: "user_favorite_stories_idx", unique: true
 
   create_table "users", force: true do |t|
     t.string   "username",             limit: 50
@@ -159,12 +168,12 @@ ActiveRecord::Schema.define(version: 20140106205200) do
     t.integer  "karma",                                 default: 0,     null: false
   end
 
-  add_index "users", ["mailing_list_enabled"], name: "mailing_list_enabled", using: :btree
-  add_index "users", ["mailing_list_token"], name: "mailing_list_token", unique: true, using: :btree
-  add_index "users", ["password_reset_token"], name: "password_reset_token", unique: true, using: :btree
-  add_index "users", ["rss_token"], name: "rss_token", unique: true, using: :btree
-  add_index "users", ["session_token"], name: "session_hash", unique: true, using: :btree
-  add_index "users", ["username"], name: "username", unique: true, using: :btree
+  add_index "users", ["mailing_list_enabled"], name: "mailing_list_enabled"
+  add_index "users", ["mailing_list_token"], name: "mailing_list_token", unique: true
+  add_index "users", ["password_reset_token"], name: "password_reset_token", unique: true
+  add_index "users", ["rss_token"], name: "rss_token", unique: true
+  add_index "users", ["session_token"], name: "session_hash", unique: true
+  add_index "users", ["username"], name: "username", unique: true
 
   create_table "votes", force: true do |t|
     t.integer "user_id",              null: false
@@ -174,7 +183,7 @@ ActiveRecord::Schema.define(version: 20140106205200) do
     t.string  "reason",     limit: 1
   end
 
-  add_index "votes", ["user_id", "comment_id"], name: "user_id_comment_id", using: :btree
-  add_index "votes", ["user_id", "story_id"], name: "user_id_story_id", using: :btree
+  add_index "votes", ["user_id", "comment_id"], name: "user_id_comment_id"
+  add_index "votes", ["user_id", "story_id"], name: "user_id_story_id"
 
 end

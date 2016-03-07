@@ -42,7 +42,7 @@
 
 <div class="morelink">
   <% if @page > 1 %>
-    <a href="/moderations/page/<%= @page - 1 %>">&lt;&lt; Страница
+    <a href="/moderations/page/<%= @page - 1 %>">&larr; Страница
       <%= @page - 1 %></a>
   <% end %>
 
@@ -51,6 +51,6 @@
       |
     <% end %>
     <a href="/moderations/page/<%= @page + 1 %>">Страница <%= @page + 1
-      %> &gt;&gt;</a>
+      %> &rarr;</a>
   <% end %>
 </div>
