@@ -43,18 +43,20 @@
         title="<%= Rails.application.name %> (<%= @traffic.to_i %>)"></a>
 
         <% links = {
-          "/" => "Главная",
+          "/" => @cur_url == "/" ? Rails.application.name : "Главная",
           "/newest" => "Новое",
           "/comments" => "Комментарии"
         } %>
 
+        <% links.merge!({ "/search" => "Поиск" }) %>
+
         <% if @user %>
           <% links.merge!({ "/threads" => "Мои треды",
-            "/stories/new" => "Добавить ссылку",
-            "/favorites" => "Избранное" }) %>
+            "/favorites" => "Избранное",
+            "/stories/new" => "Добавить ссылку +" }) %>
         <% end %>
 
-	<% links.merge!({ "/search" => "Поиск" }) %>
+
 
         <% if @cur_url.present? && !links.keys.include?(@cur_url) &&
         @heading.present? %>
@@ -95,9 +97,6 @@
             raw("class=\"cur_url\"") : "" %>><%= @user.username %>
             (<%= @user.karma %>)</a>
 
-          <%= link_to "Выход", { :controller => "login", :action => "logout" },
-            :data => { :confirm => "Уверены, что хотите покинуть нас?" },
-            :method => "post" %>
         <% else %>
           <a href="/login">Войти</a>
         <% end %>
@@ -124,6 +123,11 @@
         <a href="https://twitter.com/develop_re">Твиттер-бот @develop_re</a>
 	<a href="https://develop.re/rss">RSS</a>
         <a href="/about">О сайте</a>
+        <% if @user %>
+          <%= link_to "Выход", { :controller => "login", :action => "logout" },
+          :data => { :confirm => "Уверены, что хотите покинуть нас?" },
+          :method => "post" %>
+        <% end %>
       </div>
       <div class="clear"></div>
     </div>
