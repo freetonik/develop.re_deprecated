@@ -1,5 +1,4 @@
 default: &default
-  username: hexlet
   adapter: mysql2
   encoding: unicode
   pool: 10
@@ -10,5 +9,8 @@ development:
 
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  username: awshexlet
+  database: hexlet_news
+  port: 3306
+  host: <%= ENV['DATABASE_HOST'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
