@@ -46,7 +46,7 @@ end
 # config/initializers/production.rb
 class << Rails.application
   def domain
-    "develop.re"
+    "news.hexlet.io"
   end
 
   def name
