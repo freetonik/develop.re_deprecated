@@ -23,7 +23,7 @@ RUN bundle config build.nokogiri --use-system-libraries
 RUN bundle install --without development test
 
 COPY . /usr/src/app
-RUN RAILS_ENV=production bin/rake assets:precompile
+RUN RAILS_ENV=production bundle exec rake assets:precompile
 
 VOLUME /usr/src/app/tmp
 VOLUME /var/folders
