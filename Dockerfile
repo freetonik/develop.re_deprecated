@@ -18,6 +18,8 @@ RUN curl -sSL https://get.docker.com/gpg | apt-key add - \
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
 
+RUN bundle config build.nokogiri --use-system-libraries
+
 RUN bundle install --without development test
 
 COPY . /usr/src/app
