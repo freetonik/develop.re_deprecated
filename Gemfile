@@ -4,7 +4,7 @@ source "https://rubygems.org"
 gem "rails", "4.0.2"
 
 # Use mysql2 as the database for Active Record
-gem "mysql2", ">= 0.3.14"
+gem "mysql2", "= 0.3.20"
 
 # Use Rails3-style mass assignment security
 gem "protected_attributes"
