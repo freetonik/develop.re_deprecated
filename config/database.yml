@@ -1,0 +1,13 @@
+default: &default
+  username: hexlet
+  adapter: mysql
+  encoding: utf8mb4
+  pool: 10
+
+development:
+  <<: *default
+  database: hexlet_development
+
+production:
+  <<: *default
+  url: <%= ENV['DATABASE_URL'] %>

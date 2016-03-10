@@ -23,7 +23,7 @@ gem "exception_notification", "2.6.1"
 gem "bcrypt-ruby", "~> 3.1.2"
 
 # Use unicorn as the app server
-gem "unicorn"
+gem "puma"
 
 gem "nokogiri"
 gem "htmlentities"
