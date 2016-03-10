@@ -1,6 +1,6 @@
 default: &default
   username: hexlet
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8mb4
   pool: 10
 
