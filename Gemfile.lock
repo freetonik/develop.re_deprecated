@@ -54,7 +54,7 @@ GEM
     mini_portile2 (2.0.0)
     minitest (4.7.5)
     multi_json (1.11.2)
-    mysql2 (0.3.20)
+    mysql2 (0.4.3)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     oauth (0.5.1)
@@ -138,7 +138,7 @@ DEPENDENCIES
   jquery-rails
   machinist
   mail
-  mysql2 (= 0.3.20)
+  mysql2 (>= 0.3.14)
   nokogiri
   oauth
   protected_attributes
