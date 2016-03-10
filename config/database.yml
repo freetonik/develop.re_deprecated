@@ -1,16 +1,12 @@
 default: &default
-  adapter: mysql2
+  username: postgres
+  adapter: postgresql
   encoding: unicode
   pool: 10
 
 development:
   <<: *default
-  database: hexlet_development
 
 production:
   <<: *default
-  username: awshexlet
-  database: hexlet_news
-  port: 3306
-  host: <%= ENV['DATABASE_HOST'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
