@@ -270,7 +270,7 @@ private
     if stories.any?
       comment_counts = {}
       Keystore.where(stories.map{|s|
-      "`key` = 'story:#{s.id}:comment_count'" }.join(" OR ")).each do |ks|
+      "'key' = 'story:#{s.id}:comment_count'" }.join(" OR ")).each do |ks|
         comment_counts[ks.key[/\d+/].to_i] = ks.value
       end
 

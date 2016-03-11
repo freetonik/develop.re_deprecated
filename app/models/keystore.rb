@@ -10,12 +10,12 @@ class Keystore < ActiveRecord::Base
   def self.put(key, value)
     if Keystore.connection.adapter_name == "SQLite"
       Keystore.connection.execute("INSERT OR REPLACE INTO " <<
-        "#{Keystore.table_name} (`key`, `value`) VALUES " <<
+        "#{Keystore.table_name} ('key', 'value') VALUES " <<
         "(#{q(key)}, #{q(value)})")
     else
       Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
-        "`key`, `value`) VALUES (#{q(key)}, #{q(value)}) ON DUPLICATE KEY " +
-        "UPDATE `value` = #{q(value)}")
+        "'key', 'value') VALUES (#{q(key)}, #{q(value)}) ON DUPLICATE KEY " +
+        "UPDATE 'value' = #{q(value)}")
     end
 
     true
@@ -31,14 +31,14 @@ class Keystore < ActiveRecord::Base
     Keystore.transaction do
       if Keystore.connection.adapter_name == "SQLite"
         Keystore.connection.execute("INSERT OR IGNORE INTO " <<
-          "#{Keystore.table_name} (`key`, `value`) VALUES " <<
+          "#{Keystore.table_name} ('key', 'value') VALUES " <<
           "(#{q(key)}, 0)")
         Keystore.connection.execute("UPDATE #{Keystore.table_name} " <<
-          "SET `value` = `value` + #{q(amount)} WHERE `key` = #{q(key)}")
+          "SET 'value' = 'value' + #{q(amount)} WHERE 'key' = #{q(key)}")
       else
         Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
-          "`key`, `value`) VALUES (#{q(key)}, #{q(amount)}) ON DUPLICATE KEY " +
-          "UPDATE `value` = `value` + #{q(amount)}")
+          "'key', 'value') VALUES (#{q(key)}, #{q(amount)}) ON DUPLICATE KEY " +
+          "UPDATE 'value' = 'value' + #{q(amount)}")
       end
 
       new_value = self.value_for(key)
