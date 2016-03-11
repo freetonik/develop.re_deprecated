@@ -14,7 +14,7 @@ class Keystore < ActiveRecord::Base
         "(#{q(key)}, #{q(value)})")
     else
       Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
-        "key, value) VALUES (#{q(key)}, #{q(value)})
+        "key, value) select #{q(key)}, #{q(value)}
         WHERE NOT EXISTS (SELECT 1 from #{Keystore.table_name} where key = #{q(key)})")
 
       Keystore.connection.execute("UPDATE #{Keystore.table_name} " +
@@ -40,7 +40,7 @@ class Keystore < ActiveRecord::Base
           "SET 'value' = 'value' + #{q(amount)} WHERE 'key' = #{q(key)}")
       else
         Keystore.connection.execute("INSERT INTO #{Keystore.table_name} (" +
-          "key, value) VALUES (#{q(key)}, #{q(amount)})
+          "key, value) select #{q(key)}, #{q(amount)}
           WHERE NOT EXISTS (SELECT 1 from #{Keystore.table_name} where key = #{q(key)})")
 
         Keystore.connection.execute("UPDATE #{Keystore.table_name} " +
